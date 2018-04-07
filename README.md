@@ -23,6 +23,7 @@
 
 ## Windows
 
+- แนะนำให้ใช้ Powershell ดีกว่า ถ้ามี เพราะ Command Prompt แทบไม่มีคำสั่งอะไรให้ใช้เลย - -"
 - โหลด Python 3 Version ล่าสุดมาลงก่อน
 - ตรงที่ต้องใช้คำสั่ง `sudo` ให้เปิดหน้า Command Prompt/Powershell แบบ Run as Admin
 - อย่าลืมเอา Python 3 ใส่ใน PATH ด้วย 
