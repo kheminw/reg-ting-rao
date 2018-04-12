@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% if title %}
+    <title>Reg - {{title}}</title>
+    {% else %}
+    <title>Registra</title>
+    {% endif %}
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendor/fontawesome/css/font-awesome.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendor/animate.css/animate.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendor/toastr/toastr.min.css')}}"/>
+
+    <!-- App styles -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static',filename='styles/pe-icons/pe-icon-7-stroke.css')}}"/> -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/pe-icons/helper.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/stroke-icons/style.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+  </head>
+  <body>
+    <div class="wrapper">
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">Registra</a>
+          </div>
+          <div class="navbar-collapse collapse">
+
+          </div>
+        </div>
+      </nav>
+        {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
