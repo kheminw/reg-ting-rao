@@ -9,5 +9,6 @@ python_version = "3.6"
 [packages]
 flask = "*"
 pylint = "*"
+flask-login = "*"
 
 [dev-packages]
