@@ -1,0 +1,54 @@
+.diagonal{
+    width:100px;
+    height:50px;
+    padding:0;
+    margin:0;
+}
+
+.center-text{
+    text-align:center;
+}
+
+.classroom-long{
+    text-align:center; 
+    font-size:0.8vw; 
+    width:150px; 
+    white-space:pre-wrap; 
+    word-wrap:break-word;
+}
+
+.classroom-short{
+    text-align:center; 
+    font-size:1.1vw;
+    widows:150px;
+}
+
+.line {
+    width: 112px;
+    height: 47px;
+    border-bottom: 1px solid #FFFFFF;
+    transform: translateY(-20px) translateX(5px) rotate(27deg);
+    position: absolute;
+    z-index: -1;
+  }
+
+.background>div {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+}
+  
+.top {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+}
+  

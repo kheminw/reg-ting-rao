@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<aside class="navigation">
+  <nav>
+    <ul class="nav luna-nav">
+      <li class="nav-category">Main</li>
+      <li class="active"><a href="#">Profile</a></li>
+      <li><a href="schedule.html">Study Schedule</a></li>
+      <li><a href="#">Study Schedule</a></li>
+      <li><a href="#">Study Schedule</a></li>
+      <li><a href="#">Study Schedule</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- Unfinished schedule table,Still don't know what it should look like -->
+<div style="display:table; vertical-align:middle; padding-top:10%;  padding-left:20%; padding-right:5%;">
+  <table class="table table-striped table-bordered width:100px;">
+    <thead>
+      <tr>
+        <th></th>
+        {% for t in range(8,18) %}
+          {% set time = "{:02}".format(t)+":00" %}
+          <th style ="font-size:0.9vw;">{{time}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:azure; height:60px;"> Monday </td>
+        <td style="text-align:center;"> Songkran Festival </td>
+      </tr>
+      <tr>
+        <td style="color:azure;"> Tuesday </td>
+        {% for course in ["Songkran","Festival","intro to Database"," "," ","Intro to Database Design \n Lorem 404 ","intro to Database","intro to Database","intro to Database","intro to Database"] %}
+          {% if course|length > 10 %}
+            <td class= "classroom-long"> {{course}} </td>
+          {% elif 0 < course|length < 10  %}
+            <td class= "classroom-short"> {{course}} </td>
+          {% elif course|length == 0  %}
+            <td style= "text-align:center; font-size:1.3vw; widows:150px;"> {{course}} </td>
+          {% endif %}
+        {% endfor %}
+      </tr>
+      <tr>
+        <td style="color:azure;"> Wednesday </td>
+        <td style="text-align:center;"> Intro to data science </td>
+      </tr>
+      <tr>
+        <td style="color:azure;"> Thursday </td>
+        <td style="text-align:center;"> Songkran Festival </td>
+      </tr>
+      <tr>
+        <td style="color:azure;"> Friday </td>
+        <td style="text-align:center;"> Songkran Festival </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div style="display:table; margin:auto; vertical-align:middle; text-align:center; padding-top: 5%;">
+  <h4> Registered Course </p>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <td style="text-align:center;">Course ID</td>
+        <td style="text-align:center;">Name</td>
+        <td style="text-align:center;">Section</td>
+        <td style="text-align:center;">Credit</td>
+        <td style="text-align:center;">Midterm Exam Date</td>
+        <td style="text-align:center;">Final Exam Date</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align:center;">0000000</td>
+        <td style="text-align:center;">Songkran Festival</td>
+        <td style="text-align:center;">1</td>
+        <td style="text-align:center;">1</td>
+        <td style="text-align:center;">14 April 2018</td>
+        <td style="text-align:center;">16 April 2018</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}
