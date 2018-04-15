@@ -4,9 +4,9 @@
 <aside class="navigation">
   <nav>
     <ul class="nav luna-nav">
-      <li class="nav-category">Main</li>
-      <li class="active"><a href="#">Profile</a></li>
-      <li><a href="schedule.html">Study Schedule</a></li>
+      <li class="nav-category">Menu</li>
+      <li class="active"><a href="#">Main</a></li>
+      <li><a href="schedule.html"></a></li>
       <li><a href="#">Study Schedule</a></li>
       <li><a href="#">Study Schedule</a></li>
       <li><a href="#">Study Schedule</a></li>
@@ -29,31 +29,108 @@
     <tbody>
       <tr>
         <td style="color:azure; height:60px;"> Monday </td>
-        <td style="text-align:center;"> Songkran Festival </td>
-      </tr>
-      <tr>
-        <td style="color:azure;"> Tuesday </td>
-        {% for course in ["Songkran","Festival","intro to Database"," "," ","Intro to Database Design \n Lorem 404 ","intro to Database","intro to Database","intro to Database","intro to Database"] %}
-          {% if course|length > 10 %}
-            <td class= "classroom-long"> {{course}} </td>
-          {% elif 0 < course|length < 10  %}
-            <td class= "classroom-short"> {{course}} </td>
-          {% elif course|length == 0  %}
-            <td style= "text-align:center; font-size:1.3vw; widows:150px;"> {{course}} </td>
+        {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
+          {% if course != ""%}
+            {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
+            {% if course.name|length > 10 %}
+              <td class= "classroom-long">{{course.name}}{{classroom}}</td>
+            {% elif 0 < course|length < 10  %}
+              <td class= "classroom-short"> {{course}} </td>
+            {% elif course|length == 0  %}
+              <td> {{course}} </td>
+            {% endif %}
+          {% else %}
+            <td class= "classroom-long"></td>
           {% endif %}
         {% endfor %}
       </tr>
       <tr>
-        <td style="color:azure;"> Wednesday </td>
-        <td style="text-align:center;"> Intro to data science </td>
+        <td style="color:azure;"> Tuesday </td>
+        {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
+          {% if course != ""%}
+            {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
+            {% if course.name|length > 10 %}
+              <td class= "classroom-long">{{course.name}}{{classroom}}</td>
+            {% elif 0 < course|length < 10  %}
+              <td class= "classroom-short"> {{course}} </td>
+            {% elif course|length == 0  %}
+              <td> {{course}} </td>
+            {% endif %}
+          {% else %}
+            <td class= "classroom-long"></td>
+          {% endif %}
+      {% endfor %}
+      </tr>
+      <tr>
+        <td style="color:azure; height:60px"> Wednesday </td>
+        {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
+          {% if course != ""%}
+            {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
+            {% if course.name|length > 10 %}
+              <td class= "classroom-long">{{course.name}}{{classroom}}</td>
+            {% elif 0 < course|length < 10  %}
+              <td class= "classroom-short"> {{course}} </td>
+            {% elif course|length == 0  %}
+              <td> {{course}} </td>
+            {% endif %}
+          {% else %}
+            <td class= "classroom-long"></td>
+          {% endif %}
+      {% endfor %}
       </tr>
       <tr>
         <td style="color:azure;"> Thursday </td>
-        <td style="text-align:center;"> Songkran Festival </td>
+        {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
+          {% if course != ""%}
+            {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
+            {% if course.name|length > 10 %}
+              <td class= "classroom-long">{{course.name}}{{classroom}}</td>
+            {% elif 0 < course|length < 10  %}
+              <td class= "classroom-short"> {{course}} </td>
+            {% elif course|length == 0  %}
+              <td> {{course}} </td>
+            {% endif %}
+          {% else %}
+            <td class= "classroom-long"></td>
+          {% endif %}
+        {% endfor %}
       </tr>
       <tr>
         <td style="color:azure;"> Friday </td>
-        <td style="text-align:center;"> Songkran Festival </td>
+        {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+        {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
+          {% if course != ""%}
+            {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
+            {% if course.name|length > 10 %}
+              <td class= "classroom-long">{{course.name}}{{classroom}}</td>
+            {% elif 0 < course|length < 10  %}
+              <td class= "classroom-short"> {{course}} </td>
+            {% elif course|length == 0  %}
+              <td> {{course}} </td>
+            {% endif %}
+          {% else %}
+            <td class= "classroom-long"></td>
+          {% endif %}
+      {% endfor %}
       </tr>
     </tbody>
   </table>

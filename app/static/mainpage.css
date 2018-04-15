@@ -12,7 +12,7 @@
 .classroom-long{
     text-align:center; 
     font-size:0.8vw; 
-    width:150px; 
+    width:250px; 
     white-space:pre-wrap; 
     word-wrap:break-word;
 }
@@ -20,7 +20,7 @@
 .classroom-short{
     text-align:center; 
     font-size:1.1vw;
-    widows:150px;
+    widows:250px;
 }
 
 .line {
