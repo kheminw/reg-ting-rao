@@ -10,15 +10,15 @@
 }
 
 .classroom-long{
-    text-align:center; 
-    font-size:0.8vw; 
-    width:250px; 
-    white-space:pre-wrap; 
+    text-align:center;
+    font-size:0.8vw;
+    width:250px;
+    white-space:pre-wrap;
     word-wrap:break-word;
 }
 
 .classroom-short{
-    text-align:center; 
+    text-align:center;
     font-size:1.1vw;
     widows:250px;
 }
@@ -45,10 +45,11 @@
     bottom: 1px;
     left: 1px;
 }
-  
+
 .top {
     position: absolute;
     top: 1px;
     right: 1px;
 }
-  
+
+
