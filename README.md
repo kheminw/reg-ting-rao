@@ -5,9 +5,9 @@
 โปรเจคนี้ใช้ Flask และใช้ Virtual Environment ของ Python 
 เพื่อให้แยก Dependencies ออกจาก Python ตัวหลักของเครื่องได้
 
-# Installation
+## Installation
 
-## Linux/macOS
+### Linux/macOS
 
 - `python --version` -> `3.6.x` ของ Mac น่าจะต้องลง Python 3 ก่อน
 - `which pip` -> `pip <someversion> from <somewhere>/python3.x/` ต้องเป็นของ Python 3 นะ
@@ -21,7 +21,7 @@
 - `python reg_ting_rao.py` ควรจะต้องขึ้นว่า `Running on http://0.0.0.0:8080`
 - ออกจาก Virtual Environment ด้วยการพิมพ์คำสั่ง `exit` **ไม่ใช่คำสั่ง `deactivate`**
 
-## Windows
+### Windows
 
 - แนะนำให้ใช้ Powershell ดีกว่า ถ้ามี เพราะ Command Prompt แทบไม่มีคำสั่งอะไรให้ใช้เลย - -"
 - โหลด Python 3 Version ล่าสุดมาลงก่อน
@@ -30,7 +30,15 @@
 - ตรงที่ต้องใช้คำสั่ง `which <something>` เปลี่ยนเป็น `Get-Command <something>`
 - นอกนั้นทำตามข้างบนได้เลย
 
-# References
+## Working with ORM
+
+- สร้าง `config.py` ตามที่เขียนใน `config.example.py` ก่อน
+- เพิ่ม Class ตาม Table ที่เรามี โดยทำในไฟล์ `models.py`
+- `export FLASK_APP=app.py`
+- `flask db migrate -m "<migration message>"` เพื่อทำการสร้าง Revision ใหม่
+- `flask db upgrade` เพื่อทำการ Upload Revision ใหม่ไปที่ Database
+
+## References
 
 - [Flask Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
 - [Jinja2 Template](http://jinja.pocoo.org/)
