@@ -32,6 +32,8 @@
 
 ## Working with ORM
 
+### ห้ามแก้ไขไฟล์ `config.example.py` ให้สร้าง `config.py` ตามนั้น และห้าม Push ขึ้นมา
+
 - สร้าง `config.py` ตามที่เขียนใน `config.example.py` ก่อน
 - เพิ่ม Class ตาม Table ที่เรามี โดยทำในไฟล์ `models.py`
 - `export FLASK_APP=app.py`
