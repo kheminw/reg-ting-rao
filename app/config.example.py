@@ -7,7 +7,7 @@ import os
 class Config(object):
     # Get your own CSRF token from here: http://nux.net/secret
     SECRET_KEY = os.environ.get("SECRET_KEY") or 'my-key-eiei'
-    # URI Scheme: 'mysql://<user>:<password>@<host>/db_test1'
+    # URI Scheme: 'mysql+pymysql://<user>:<password>@<host>/db_test1'
     SQLALCHEMY_DATABASE_URI = 'mysql://'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

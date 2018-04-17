@@ -36,7 +36,10 @@
 
 - สร้าง `config.py` ตามที่เขียนใน `config.example.py` ก่อน
 - เพิ่ม Class ตาม Table ที่เรามี โดยทำในไฟล์ `models.py`
-- `export FLASK_APP=app.py`
+- Terminal: `export FLASK_APP=reg_ting_rao.py`
+- Windows Powershell: `$env:FLASK_APP = "reg_ting_rao.py"`
+- Windows Command Prompt: `set FLASK_APP=reg_ting_rao.py`
+- ใช้คำสั่ง `flask db init` ถ้าจะทดสอบกับ DB ส่วนตัว
 - `flask db migrate -m "<migration message>"` เพื่อทำการสร้าง Revision ใหม่
 - `flask db upgrade` เพื่อทำการ Upload Revision ใหม่ไปที่ Database
 
