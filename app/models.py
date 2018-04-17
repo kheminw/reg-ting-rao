@@ -72,4 +72,73 @@ class Major(db.Model):
 
     major_id = db.Column(db.Integer, primary_key=True)
     faculty_id = db.Column(db.Integer, db.ForeignKey('Faculty.faculty_id'), primary_key=True)
+    major_name = db.Column(db.String(60))
+
+class Professor(db.Model):
+    __tablename__ = 'Professor'
+    
+    professor_id = db.Column(db.Integer, primary_key=True)
+    major_id = db.Column(db.Integer, db.ForeignKey('Major.major_id'))
+    faculty_id = db.Column(db.Integer, db.ForeignKey('Major.faculty_id'))
+    name = db.Column(db.String(60), nullable=False)
+    surname = db.Column(db.String(60), nullable=False)
+
+class Semester(db.Model):
+    __tablename__ = 'Semester'
+
+    semester_no = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.Integer, primary_key=True)
+    enroll_start_date = db.Column(db.Date)
+    enroll_end_date = db.Column(db.Date)
+    withdraw_start_date = db.Column(db.Date)
+    withdraw_end_date = db.Column(db.Date)
+
+class Course(db.Model):
+    __tablename__ = 'Course'
+
+    course_id = db.Column(db.Integer, primary_key=True)
+    section = db.Column(db.Integer, primary_key=True)
+    course_semester_no = db.Column(db.Integer, db.ForeignKey('Semester.semester_no'), primary_key=True)
+    course_year = db.Column(db.Integer, db.ForeignKey('Semester.year'), primary_key=True)
+    course_name = db.Column(db.String(60), nullable=False)
+    credit = db.Column(db.Integer, nullable=False)
+    midterm_exam_date = db.Column(db.Date)
+    final_exam_date = db.Column(db.Date)
+    course_capacity = db.Column(db.Integer)
+    registered_amount = db.Column(db.Integer)
+    course_Type = db.Column(db.String(60), nullable=False)
+    course_gpax = db.Column(db.Float)
+    major_id = db.Column(db.Integer, db.ForeignKey('Major.major_id'))
+    faculty_id = db.Column(db.Integer, db.ForeignKey('Major.faculty_id'))
+    room_no = db.Column(db.Integer, db.ForeignKey('Building_Room.room_no'))
+    building_name = db.Column(db.String(60), db.ForeignKey('Building_Room.building_name'))
+
+class Teaches(db.Model):
+    __tablename__ = 'Teaches'
+
+    professor_id = db.Column(db.Integer, db.ForeignKey('Professor.professor_id'), primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('Course.course_id'), primary_key=True)
+    section = db.Column(db.Integer, db.ForeignKey('Course.section'), primary_key=True)
+    course_semester_no = db.Column(db.Integer, db.ForeignKey('Course.course_semester_no'), primary_key=True)
+    course_year = db.Column(db.Integer, db.ForeignKey('Course.course_year'), primary_key=True)
+
+class Study(db.Model):
+    __tablename__ = 'Study'
+
+    sid = db.Column(db.Integer, db.ForeignKey('Student.sid'), primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('Course.course_id'), primary_key=True)
+    section = db.Column(db.Integer, db.ForeignKey('Course.section'), primary_key=True)
+    course_semester_no = db.Column(db.Integer, db.ForeignKey('Course.course_semester_no'), primary_key=True)
+    course_year = db.Column(db.Integer, db.ForeignKey('Course.course_year'), primary_key=True)
+    grade = db.Column(db.Float)
+
+class Request(db.Model):
+    __tablename__ = 'Request'
+
+    sid = db.Column(db.Integer, db.ForeignKey('Student.sid'), primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('Course.course_id'), primary_key=True)
+    section = db.Column(db.Integer, db.ForeignKey('Course.section'), primary_key=True)
+    course_semester_no = db.Column(db.Integer, db.ForeignKey('Course.course_semester_no'), primary_key=True)
+    course_year = db.Column(db.Integer, db.ForeignKey('Course.course_year'), primary_key=True)
+    result = db.Column(db.String(60))
 
