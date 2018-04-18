@@ -47,6 +47,25 @@
     height:100%;
 }
 
+.search-box{
+    padding-right:1.4%;
+    padding-left:1.4%;
+    outline:none;
+    border:none;
+    border-radius:15px;
+    color:rgb(50, 48, 85);
+    background-color:bisque
+}
+.option-box{
+    padding-right:1.5%;
+    padding-left:1.5%;
+    outline:none;
+    border:none;
+    border-radius:5px;
+    width:100px;
+    color:rgb(50, 48, 85);
+    background-color:whitesmoke;
+}
 .line {
     width: 112px;
     height: 47px;
