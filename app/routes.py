@@ -64,3 +64,27 @@ def courses():
 @login_required
 def tuition():
     return render_template("tuition.html", title='tuition')
+
+#send json data to this url
+@app.route("/register_new_course", methods=["POST"])
+def rr():
+    res = {}
+    successful = False
+    if (request.method == "POST"):
+        data = request.get_json()
+        new_study = Study(sid=data["sid"],
+                        course_id=data["course_id"],
+                        section=data["section"],
+                        course_semester_no=data["course_semester_no"],
+                        course_year=data["course_year"])
+        try:
+            db.session.add(new_study)
+            db.session.commit()
+            successful = True
+        except:
+            db.session.rollback()
+        if(successful):
+            res["result"] = "success"
+        else:
+            res["result"] = "adding data to the table failed"       
+    return json.jsonify(res)
