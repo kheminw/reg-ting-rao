@@ -1,11 +1,19 @@
-from app import db
+from app import db,login_manager
+from flask_login import UserMixin
 
-class User(db.Model):
+class user(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
-
+    password = db.Column(db.String(64), nullable=False)
     def __repr__(self):
         return "<User {}".format(self.username)
+
+    def check_password(self,password):
+        return self.password == password
+
+@login_manager.user_loader
+def load_user(id):
+    return user.query.get(int(id))
 
 class Faculty(db.Model):
     __tablename__ = 'Faculty'
