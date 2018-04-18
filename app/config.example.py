@@ -11,11 +11,11 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'mysql://'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-class DevelopmentConfig(object):
+class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_ECHO = True
 
-class ProductionConfig(object):
+class ProductionConfig(Config):
     DEBUG = False
 
 app_config = {
