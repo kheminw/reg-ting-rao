@@ -23,7 +23,7 @@ def schedule():
 def grade():
     return render_template("grade.html", title='Dashboard')
 
-@app.route("/register",method=["GET","POST"])
+@app.route("/register", methods=["GET","POST"])
 def register():
     
     return render_template("register.html", title='Dashboard')
