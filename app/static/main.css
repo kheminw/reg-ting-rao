@@ -23,6 +23,30 @@
     widows:250px;
 }
 
+.input-text-small{
+    text-align:center;
+    background-color:#21242a; 
+    border:none; 
+    width:10%; 
+    height:100%;
+}
+
+.input-text-big{
+    text-align:center;
+    background-color:#21242a; 
+    border:none; 
+    width:30%; 
+    height:100%;
+}
+
+.input-register-big{
+    text-align:center;
+    background-color:#21242a; 
+    border:none; 
+    width:50%; 
+    height:100%;
+}
+
 .line {
     width: 112px;
     height: 47px;
