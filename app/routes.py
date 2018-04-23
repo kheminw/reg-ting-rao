@@ -86,5 +86,5 @@ def rr():
         if(successful):
             res["result"] = "success"
         else:
-            res["result"] = "adding data to the table failed"       
+            res["result"] = "adding data to the table failed"
     return json.jsonify(res)
