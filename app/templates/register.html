@@ -198,13 +198,13 @@
 <script type="text/javascript">
 $("#confirm").on('click', function(){
   $.ajax({
-    url:"/register_new_course",
+    url:"/api/register_new_course",
     method: "POST",
     data:{
-      sid: 5831058721,
+      sid: 10001,
       course_id: 2110101,
-      section: 33,
-      course_semester_no: 2,
+      section: 1,
+      course_semester_no: 1,
       course_year: 2560
     }
   });
