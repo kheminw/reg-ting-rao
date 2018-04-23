@@ -1,7 +1,7 @@
 from flask import render_template,flash, redirect, url_for, request, jsonify
-from flask_login import current_user,login_user,login_required
+from flask_login import current_user,login_user,login_required,logout_user
 from app import app, login_manager, db
-from app.models import user,Study
+from app.models import *
 from app.forms import LoginForm
 from datetime import timedelta
 
@@ -58,7 +58,14 @@ def profile():
 @app.route("/addcourse",methods=['GET','POST'])
 @login_required
 def addcourse():
-    return render_template("add-eliminate.html", title='addcourse')
+    current_courses = Study.query.filter_by(sid=current_user.username, course_year=2560).all()
+    current_courses_name_credit = Course.query \
+        .filter(Course.course_id.in_([x.course_id for x in current_courses])).all()
+    name_credit_serialized = {}
+    for course in current_courses_name_credit:
+        name_credit_serialized[course.course_id] = [course.course_name, course.credit]
+    return render_template("add-eliminate.html", title='addcourse',
+        current_courses=current_courses, name_credit=name_credit_serialized)
 
 @app.route("/courses",methods=['GET','POST'])
 @login_required
@@ -70,8 +77,15 @@ def courses():
 def tuition():
     return render_template("tuition.html", title='tuition')
 
+@app.route("/logout", methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect("/login")
+
 #send json data to this url
-@app.route("/register_new_course", methods=["POST"])
+@app.route("/api/register_new_course", methods=["POST"])
+@login_required
 def rr():
     res = {}
     successful = False
@@ -91,5 +105,58 @@ def rr():
         if(successful):
             res["result"] = "success"
         else:
-            res["result"] = "adding data to the table failed"
-    return json.jsonify(res)
+            res["result"] = "adding data to the table failed"       
+    return jsonify(res)
+
+@app.route("/api/add_remove_course", methods=["POST", "DELETE"])
+@login_required
+def add_remove_course():
+    successful = False
+    res = {}
+    if(request.method == "POST"):
+        print(current_user.username)
+        new_course_entry = Study(sid=current_user.username,
+                               course_id=request.form["course_id"],
+                               section=request.form["section"],
+                               course_semester_no=request.form["course_semester_no"],
+                               course_year=request.form["course_year"])
+        try:
+            db.session.add(new_course_entry)
+            db.session.commit()
+            successful = True
+        except:
+            db.session.rollback()
+    elif(request.method == "DELETE"):
+        print(current_user.username, request.form["course_id"])
+        delete_entry = Study.query.filter_by(sid=current_user.username, \
+         course_id=request.form["course_id"]).first()
+        print(delete_entry.course_id)
+        try:
+            db.session.delete(delete_entry)
+            db.session.commit()
+            successful = True
+        except:
+            db.session.rollback()
+    if(successful):
+        res["result"] = "success"
+    else:
+        res["result"] = "adding data to the table failed"
+    return jsonify(res)
+
+@app.route("/api/get_current_courses/", methods=["GET"])
+@login_required
+def get_current_courses():
+    current_courses = Study.query.filter_by(sid=current_user.username, course_year=2560).all()
+    current_courses_parsed = {"sid":current_user.username, "courses":[]}
+    for course in current_courses:
+        current_courses_parsed["courses"].append(course.course_id)
+    return jsonify(current_courses_parsed)
+
+@app.route("/api/get_all_courses/", methods=["GET"])
+@login_required
+def get_all_courses():
+    all_courses = Study.query.filter_by(sid=current_user.username).all()
+    all_courses_parsed = {"sid":current_user.username, "courses":[]}
+    for course in all_courses:
+        all_courses_parsed["courses"].append(course.course_id)
+    return jsonify(all_courses_parsed)
