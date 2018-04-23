@@ -40,6 +40,11 @@ def schedule():
 def grade():
     return render_template("grade.html", title='grade')
 
+@app.route("/transcript", methods=['GET', 'POST'])
+@login_required
+def transcript():
+    return render_template("transcript.html", title='transcript')
+
 @app.route("/register", methods=["GET","POST"])
 def register():
 
