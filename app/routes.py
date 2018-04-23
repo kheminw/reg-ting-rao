@@ -1,7 +1,7 @@
-from flask import render_template,flash, redirect, url_for, request
+from flask import render_template,flash, redirect, url_for, request, jsonify
 from flask_login import current_user,login_user,login_required
-from app import app, login_manager
-from app.models import user
+from app import app, login_manager, db
+from app.models import user,Study
 from app.forms import LoginForm
 from datetime import timedelta
 
@@ -71,12 +71,12 @@ def rr():
     res = {}
     successful = False
     if (request.method == "POST"):
-        data = request.get_json()
-        new_study = Study(sid=data["sid"],
-                        course_id=data["course_id"],
-                        section=data["section"],
-                        course_semester_no=data["course_semester_no"],
-                        course_year=data["course_year"])
+        print(request.form["sid"])
+        new_study = Study(sid=request.form["sid"],
+                        course_id=request.form["course_id"],
+                        section=request.form["section"],
+                        course_semester_no=request.form["course_semester_no"],
+                        course_year=request.form["course_year"])
         try:
             db.session.add(new_study)
             db.session.commit()
