@@ -4,6 +4,7 @@ from app import app, login_manager, db
 from app.models import *
 from app.forms import LoginForm
 from datetime import timedelta
+from sqlalchemy import and_
 
 @app.route("/index")
 def index():
@@ -39,10 +40,13 @@ def schedule():
 @login_required
 def grade():
     registered_course = Study.query.filter_by(sid=current_user.username).all()
+    print("FUCKKKKKKKK",registered_course)
     registered_course_name_credit = Course.query \
     .filter(Course.course_id.in_([c.course_id for c in registered_course])).all()
     registered_course_name_dict = {}
     
+    re = [(c.course_name,c.course_year,c.course_semester_no) for c in registered_course_name_credit]
+
     for course in registered_course_name_credit:
         registered_course_name_dict[course.course_id] = [course.course_name,course.credit]
     
@@ -51,13 +55,24 @@ def grade():
         year_semester.add((course.course_year,course.course_semester_no))
     year_semester = sorted(list(year_semester))
 
-    registered_course_dict = {}
+    all_credit_semester = {}
+    all_credit_semester[(0,0)] = 0
+    
+    for course in registered_course:
+        if not (course.course_semester_no,course.course_year) in all_credit_semester:
+            all_credit_semester[(course.course_semester_no,course.course_year)] = 0
+        all_credit_semester[(course.course_semester_no,course.course_year)] +=  \
+        registered_course_name_dict[course.course_id][1]
+        all_credit_semester[(0,0)] += registered_course_name_dict[course.course_id][1]
+
+    registered_course_dict = {} 
     for i in year_semester:
         registered_course_dict[(i[0],i[1])] = Study.query \
         .filter_by(sid=current_user.username,course_semester_no=i[1],course_year=i[0]).all()
 
     return render_template("grade.html", title='grade',
     year_semester=year_semester,registered_course=registered_course,
+    all_credit_semester=all_credit_semester,registered_course_name_credit=re,
     registered_course_name_dict=registered_course_name_dict,registered_course_dict=registered_course_dict)
 
 @app.route("/transcript", methods=['GET', 'POST'])
