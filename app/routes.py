@@ -38,7 +38,27 @@ def schedule():
 @app.route("/grade",methods=['GET','POST'])
 @login_required
 def grade():
-    return render_template("grade.html", title='grade')
+    registered_course = Study.query.filter_by(sid=current_user.username).all()
+    registered_course_name_credit = Course.query \
+    .filter(Course.course_id.in_([c.course_id for c in registered_course])).all()
+    registered_course_name_dict = {}
+    
+    for course in registered_course_name_credit:
+        registered_course_name_dict[course.course_id] = [course.course_name,course.credit]
+    
+    year_semester = set()
+    for course in registered_course:
+        year_semester.add((course.course_year,course.course_semester_no))
+    year_semester = sorted(list(year_semester))
+
+    registered_course_dict = {}
+    for i in year_semester:
+        registered_course_dict[(i[0],i[1])] = Study.query \
+        .filter_by(sid=current_user.username,course_semester_no=i[1],course_year=i[0]).all()
+
+    return render_template("grade.html", title='grade',
+    year_semester=year_semester,registered_course=registered_course,
+    registered_course_name_dict=registered_course_name_dict,registered_course_dict=registered_course_dict)
 
 @app.route("/transcript", methods=['GET', 'POST'])
 @login_required
@@ -53,7 +73,16 @@ def register():
 @app.route("/profile",methods=['GET','POST'])
 @login_required
 def profile():
-    return render_template("profile.html", title='profile')
+    user = {}
+    current_user_info = Student.query.filter_by(sid=current_user.username).first()
+    current_user_faculty = Faculty.query.filter_by(faculty_id=current_user_info.faculty_id).first()
+    user["name"] = current_user_info.name
+    user["sid"] = current_user_info.sid
+    user["enroll_year"] = current_user_info.enroll_year
+    user["degree"] = current_user_info.degree
+    user["dorm_score"] = current_user_info.dorm_score
+    user["faculty_name"] = current_user_faculty.faculty_name
+    return render_template("profile.html", title='profile', user=user)
 
 @app.route("/addcourse",methods=['GET','POST'])
 @login_required
