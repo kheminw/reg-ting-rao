@@ -103,10 +103,10 @@ def courses():
         return render_template("courses.html", title='courses')
     elif(request.method == "POST"):
         current_courses = []
-        if("course_name" in request.form):
+        if(request.form["course_name"] != ""):
             current_courses = Course.query.filter(Course.course_name.startswith(
                 request.form["course_name"])).all()
-        elif("course_id" in request.form):
+        elif(request.form["course_id"] != ""):
             current_courses = Course.query.filter(Course.course_name.startswith(
                 request.form["course_id"])).all()
         else:
@@ -202,3 +202,10 @@ def get_all_courses():
     for course in all_courses:
         all_courses_parsed["courses"].append(course.course_id)
     return jsonify(all_courses_parsed)
+
+
+@app.route('/test', methods=["GET"])
+def get_student():
+    student = Student.query.filter_by(sid=1).first()
+    print(student)
+    return str(student)
