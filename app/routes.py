@@ -40,7 +40,6 @@ def schedule():
 @login_required
 def grade():
     registered_course = Study.query.filter_by(sid=current_user.username).all()
-    print("FUCKKKKKKKK",registered_course)
     registered_course_name_credit = Course.query \
     .filter(Course.course_id.in_([c.course_id for c in registered_course])).all()
     registered_course_name_dict = {}
@@ -132,7 +131,29 @@ def courses():
 @app.route("/tuition",methods=['GET','POST'])
 @login_required
 def tuition():
-    return render_template("tuition.html", title='tuition')
+    user = {}
+    current_user_info = Student.query.filter_by(sid=current_user.username).first()
+    current_user_faculty = Faculty.query.filter_by(faculty_id=current_user_info.faculty_id).first()
+    pay_tuition = Pay_Tuition.query.filter_by(sid=current_user.username).all()
+    pay_tuition = sorted(pay_tuition,key=lambda p :p.tuition_year)
+
+    tuition = Tuition.query.filter_by(faculty_id=current_user_info.faculty_id,
+    tuition_degree=current_user_info.degree,tuition_year=pay_tuition[-1].tuition_year,
+    tuition_semester=pay_tuition[-1].tuition_semester).all()
+
+    tuition_amount_dict = {}
+    for p in pay_tuition:
+        tuition_amount_dict[(p.tuition_year,p.tuition_semester)]=Tuition.query \
+        .filter_by(faculty_id=current_user_info.faculty_id,tuition_degree=current_user_info.degree,
+        tuition_year=p.tuition_year,tuition_semester=p.tuition_semester).first().tuition_amount
+
+    user["name"] = current_user_info.name
+    user["degree"] = current_user_info.degree
+    user["faculty_name"] = current_user_faculty.faculty_name
+
+    
+    return render_template("tuition.html", title='tuition',
+    user=user,tuition=tuition,pay_tuition=pay_tuition,tuition_amount_dict=tuition_amount_dict)
 
 @app.route("/logout", methods=['GET'])
 @login_required
