@@ -99,7 +99,20 @@ def addcourse():
 @app.route("/courses",methods=['GET','POST'])
 @login_required
 def courses():
-    return render_template("courses.html", title='courses')
+    if(request.method == "GET"):
+        return render_template("courses.html", title='courses')
+    elif(request.method == "POST"):
+        current_courses = []
+        if("course_name" in request.form):
+            current_courses = Course.query.filter(Course.course_name.startswith(
+                request.form["course_name"])).all()
+        elif("course_id" in request.form):
+            current_courses = Course.query.filter(Course.course_name.startswith(
+                request.form["course_id"])).all()
+        else:
+            return redirect("/courses")
+        return render_template("course_result.html", result=current_courses)
+        
 
 @app.route("/tuition",methods=['GET','POST'])
 @login_required

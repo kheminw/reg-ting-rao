@@ -1,0 +1,13 @@
+{% extends "main.html" %}
+{% block content1 %}
+<section class="content">
+    <h3>Search Result</h3>
+    {% for course in result %}
+    <div style="flex:1; flex-direction:column;padding-left:3%;padding-top:3%; justify-content: center;">
+        <div style="flex:1;">
+            <p>Course Name: {{course.course_name}} Course ID: {{course.course_id}}</p>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
