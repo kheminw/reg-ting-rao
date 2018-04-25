@@ -39,6 +39,7 @@ def schedule():
 @app.route("/grade",methods=['GET','POST'])
 @login_required
 def grade():
+    user_gpax = Student.query.filter_by(sid=current_user.username).first().gpax
     registered_course = Study.query.filter_by(sid=current_user.username).all()
     registered_course_name_credit = Course.query \
     .filter(Course.course_id.in_([c.course_id for c in registered_course])).all()
@@ -71,12 +72,62 @@ def grade():
 
     return render_template("grade.html", title='grade',
     year_semester=year_semester,registered_course=registered_course,
-    all_credit_semester=all_credit_semester,registered_course_name_credit=re,
+    all_credit_semester=all_credit_semester,registered_course_name_credit=re,user_gpax=user_gpax,
     registered_course_name_dict=registered_course_name_dict,registered_course_dict=registered_course_dict)
 
 @app.route("/transcript", methods=['GET', 'POST'])
 @login_required
 def transcript():
+    user = {}
+    current_user_info = Student.query.filter_by(sid=current_user.username).first()
+    current_user_faculty = Faculty.query.filter_by(faculty_id=current_user_info.faculty_id).first()
+    user["name"] = current_user_info.name
+    user["sid"] = current_user_info.sid
+    user["enroll_year"] = current_user_info.enroll_year
+    user["degree"] = current_user_info.degree
+    user["faculty_name"] = current_user_faculty.faculty_name
+    
+    registered_course = Study.query.filter_by(sid=current_user.username).all()
+    registered_course_name_credit = Course.query \
+    .filter(Course.course_id.in_([c.course_id for c in registered_course])).all()
+    registered_course_name_dict = {}
+    
+    for course in registered_course_name_credit:
+        registered_course_name_dict[course.course_id] = [course.course_name,course.credit]
+    
+    year_semester = set()
+    for course in registered_course:
+        year_semester.add((course.course_year,course.course_semester_no))
+    year_semester = sorted(list(year_semester))
+
+    all_credit_semester = {}
+    all_credit_semester[(0,0)] = 0
+    
+    stack_credit_semester ={}
+
+    for course in registered_course:
+        if not (course.course_semester_no,course.course_year) in all_credit_semester:
+            all_credit_semester[(course.course_semester_no,course.course_year)] = 0
+        if not (course.course_semester_no,course.course_year) in stack_credit_semester:
+            if course.course_semester_no == 1:
+                if (3,course.course_year-1) in stack_credit_semester:
+                    stack_credit_semester[(course.course_semester_no,course.course_year)] = \
+                    stack_credit_semester[(3,course.course_year-1)]
+                else:
+                    stack_credit_semester[(course.course_semester_no,course.course_year)] = \
+                    stack_credit_semester[(2,course.course_year-1)]
+            else:
+                stack_credit_semester[(course.course_semester_no,course.course_year)] = \
+                stack_credit_semester[(course.course_semester_no-1,course.course_year)]
+        
+        stack_credit_semester[(course.course_semester_no,course.course_year)] += \
+        registered_course_name_dict[course.course_id][1]
+
+        all_credit_semester[(course.course_semester_no,course.course_year)] +=  \
+        registered_course_name_dict[course.course_id][1]
+
+        all_credit_semester[(0,0)] += registered_course_name_dict[course.course_id][1]
+
     return render_template("transcript.html", title='transcript')
 
 @app.route("/register", methods=["GET","POST"])
