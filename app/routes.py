@@ -44,12 +44,12 @@ def grade():
     registered_course_name_credit = Course.query \
     .filter(Course.course_id.in_([c.course_id for c in registered_course])).all()
     registered_course_name_dict = {}
-    
+
     re = [(c.course_name,c.course_year,c.course_semester_no) for c in registered_course_name_credit]
 
     for course in registered_course_name_credit:
         registered_course_name_dict[course.course_id] = [course.course_name,course.credit]
-    
+
     year_semester = set()
     for course in registered_course:
         year_semester.add((course.course_year,course.course_semester_no))
@@ -57,7 +57,7 @@ def grade():
 
     all_credit_semester = {}
     all_credit_semester[(0,0)] = 0
-    
+
     for course in registered_course:
         if not (course.course_semester_no,course.course_year) in all_credit_semester:
             all_credit_semester[(course.course_semester_no,course.course_year)] = 0
@@ -65,7 +65,7 @@ def grade():
         registered_course_name_dict[course.course_id][1]
         all_credit_semester[(0,0)] += registered_course_name_dict[course.course_id][1]
 
-    registered_course_dict = {} 
+    registered_course_dict = {}
     for i in year_semester:
         registered_course_dict[(i[0],i[1])] = Study.query \
         .filter_by(sid=current_user.username,course_semester_no=i[1],course_year=i[0]).all()
@@ -86,15 +86,15 @@ def transcript():
     user["enroll_year"] = current_user_info.enroll_year
     user["degree"] = current_user_info.degree
     user["faculty_name"] = current_user_faculty.faculty_name
-    
+
     registered_course = Study.query.filter_by(sid=current_user.username).all()
     registered_course_name_credit = Course.query \
     .filter(Course.course_id.in_([c.course_id for c in registered_course])).all()
     registered_course_name_dict = {}
-    
+
     for course in registered_course_name_credit:
         registered_course_name_dict[course.course_id] = [course.course_name,course.credit]
-    
+
     year_semester = set()
     for course in registered_course:
         year_semester.add((course.course_year,course.course_semester_no))
@@ -102,7 +102,7 @@ def transcript():
 
     all_credit_semester = {}
     all_credit_semester[(0,0)] = 0
-    
+
     stack_credit_semester ={}
 
     for course in registered_course:
@@ -119,7 +119,7 @@ def transcript():
             else:
                 stack_credit_semester[(course.course_semester_no,course.course_year)] = \
                 stack_credit_semester[(course.course_semester_no-1,course.course_year)]
-        
+
         stack_credit_semester[(course.course_semester_no,course.course_year)] += \
         registered_course_name_dict[course.course_id][1]
 
@@ -177,7 +177,7 @@ def courses():
         else:
             return redirect("/courses")
         return render_template("course_result.html", result=current_courses)
-        
+
 
 @app.route("/tuition",methods=['GET','POST'])
 @login_required
@@ -202,9 +202,14 @@ def tuition():
     user["degree"] = current_user_info.degree
     user["faculty_name"] = current_user_faculty.faculty_name
 
-    
+
     return render_template("tuition.html", title='tuition',
     user=user,tuition=tuition,pay_tuition=pay_tuition,tuition_amount_dict=tuition_amount_dict)
+
+@app.route("/recommend", methods=['GET','POST'])
+@login_required
+def recommend():
+    return render_template("recommend.html", title='recommend')
 
 @app.route("/logout", methods=['GET'])
 @login_required
@@ -234,7 +239,7 @@ def rr():
         if(successful):
             res["result"] = "success"
         else:
-            res["result"] = "adding data to the table failed"       
+            res["result"] = "adding data to the table failed"
     return jsonify(res)
 
 @app.route("/api/add_remove_course", methods=["POST", "DELETE"])

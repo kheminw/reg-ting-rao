@@ -1,0 +1,39 @@
+{% extends "main.html" %}
+{% block content1 %}
+
+<section class="content">
+  <h3>Recommend courses</h3>
+  <small>Enjoy choosing your A couses.</small>
+  <hr>
+  <div class="container-fluid">
+    <div class="col-lg-4">
+      <h4>*The search will be sorted by Cumulative grade*</h4>
+      <br>
+      <div class="row">
+        <div class="col-lg-9">
+          <select class="select-recommend form-control">
+          <option>Select the type couse</option>
+          <option value="gen-sci">Gened Science</option>
+          <option value="gen-soc">Gened Social</option>
+          <option value="gen-hu">Gened Human</option>
+          <option value="gen-in">Gened Interdisciplinary</option>
+        </select>
+        </div>
+        <div class="col-lg-1">
+          <button class="btn btn-accent">search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <script>
+  $(document).ready(function(){
+    $(".select-recommend").select2({
+      placeholder: "Select the type couse",
+      allowClear: true
+    });
+  })
+</script> -->
+
+{% endblock %}
