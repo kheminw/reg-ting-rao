@@ -182,7 +182,7 @@ degree_time = {'Bachelor':4, 'Master':2, 'Doctoral':2}
 #         section=1,
 #         course_semester_no=2,
 #         course_year=2017,
-#         grade=''
+#         grade=None
 #     ),
 #     Study(
 #         sid=10000,
@@ -190,7 +190,7 @@ degree_time = {'Bachelor':4, 'Master':2, 'Doctoral':2}
 #         section=2,
 #         course_semester_no=2,
 #         course_year=2017,
-#         grade=''
+#         grade=None
 #     ),
 #     Study(
 #         sid=10001,
@@ -198,8 +198,49 @@ degree_time = {'Bachelor':4, 'Master':2, 'Doctoral':2}
 #         section=1,
 #         course_semester_no=2,
 #         course_year=2017,
-#         grade=''
+#         grade=None
 #     ),
+#     Study(
+#         sid=10000,
+#         course_id=2110471,
+#         section=2,
+#         course_semester_no=2,
+#         course_year=2017,
+#         grade=None
+#     ),
+#     Study(
+#         sid=10000,
+#         course_id=2110511,
+#         section=21,
+#         course_semester_no=2,
+#         course_year=2017,
+#         grade=None
+#     ),
+#     Study(
+#         sid=10000,
+#         course_id=2110332,
+#         section=33,
+#         course_semester_no=2,
+#         course_year=2017,
+#         grade=None
+#     ),
+#     Study(
+#         sid=10000,
+#         course_id=2110432,
+#         section=21,
+#         course_semester_no=2,
+#         course_year=2017,
+#         grade=None
+#     ),
+#     Study(
+#         sid=10000,
+#         course_id=2110318,
+#         section=1,
+#         course_semester_no=2,
+#         course_year=2017,
+#         grade=None
+#     ),
+    
 # ]
 
 # db.session.add_all(study)
@@ -316,6 +357,29 @@ degree_time = {'Bachelor':4, 'Master':2, 'Doctoral':2}
 #     course_day="Friday",
 #     course_start_time='08:30',
 #     course_end_time='11:30'),
+
+#     ############# SEM 1 #####################
+
+#     Course(
+#     course_id=2110352,
+#     section=3,
+#     course_semester_no=1,
+#     course_year=2017,
+#     course_name="Computer System Architecture",
+#     credit=3,
+#     midterm_exam_date='2017-10-03',
+#     final_exam_date='2017-12-06',
+#     course_capacity=30,
+#     registered_amount=0,
+#     course_Type="CP Juniors Only",
+#     course_gpax=3.46,
+#     major_id=10,
+#     faculty_id=21,
+#     room_no=403,
+#     building_name="Engineering 100",
+#     course_day="Friday",
+#     course_start_time='09:00',
+#     course_end_time='12:00'),
 
 #     ############# GENED #####################3
 
@@ -513,12 +577,8 @@ degree_time = {'Bachelor':4, 'Master':2, 'Doctoral':2}
 #     course_end_time='11:30')
 # ]
 
-c = Course.query.filter_by(course_id=2110422)
-for cc in c:
-    cc.course_day = "Thursday"
-    cc.course_start_time = '8:30'
-    cc.course_end_time = '11:30'
+
 
 # db.session.add_all(course)
-db.session.commit()
+# db.session.commit()
 
