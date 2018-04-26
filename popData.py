@@ -42,7 +42,7 @@ degree_rate = {'Bachelor':21000, 'Master':23000, 'Doctoral':25000}
 #                     tuition_start_date=str(year)+'-12-21',
 #                     tuition_end_date=str(year)+'-12-29')
 #                 for degree in degree_rate
-#                 for year in range (2016, 2018)
+#                 for year in range (2013, 2019)
 #                 for semester in range (1, 3)
 #                 for facID in range( 21, 27)
 # ]
@@ -53,6 +53,12 @@ degree_rate = {'Bachelor':21000, 'Master':23000, 'Doctoral':25000}
 
 ############################ PART PAY_TUITION ############################
 
+
+# student = Student.query.filter_by(enroll_year=2018)
+# for s in student:
+#     s.enroll_year = 2017
+# db.session.commit()
+
 # student = Student.query.filter_by()
 # for st in student :
 #         print(st.name, st.sid, st.degree, st.faculty_id)
@@ -60,34 +66,44 @@ degree_rate = {'Bachelor':21000, 'Master':23000, 'Doctoral':25000}
 # for tui in tuition :
 #         print(tui)
 
-# payTpass = [
-#         Pay_Tuition(
-#                 sid=s.sid,
-#                 tuition_semester=sem,
-#                 tuition_year=year,
-#                 faculty_id=s.faculty_id,
-#                 # tuition_degree=s.degree,
-#                 tuition_late=random.randint(0,1),
-#                 tuition_paid=1
-#         )
-#         for s in student
-#         for sem in range (1, 3)
-#         for year in range (2016, 2017)
-# ]
+# payTpass = []
+# time = {'Bachelor':4, 'Master':2, 'Doctoral':2}
+
+# for s in student:
+#     for sem in range (1, 3):
+#         for year in range (2013, 2017):
+#             if (s.enroll_year > year) : continue
+#             elif (s.enroll_year + time[s.degree] < year) : continue
+#             else :
+#                 payTpass.append( Pay_Tuition(
+#                     sid=s.sid,
+#                     tuition_semester=sem,
+#                     tuition_year=year,
+#                     faculty_id=s.faculty_id,
+#                     # tuition_degree=s.degree,
+#                     tuition_late=random.randint(0,1),
+#                     tuition_paid=1
+#                 ))
+
 # late = random.randint(0,1)
-# payTpres = [
-#         Pay_Tuition(
-#                 sid=s.sid,
-#                 tuition_semester=sem,
-#                 tuition_year=2017,
-#                 faculty_id=s.faculty_id,
-#                 # tuition_degree=s.degree,
-#                 tuition_late=late if (sem==2) else random.randint(0,1),
-#                 tuition_paid=1 if (sem==1) else random.randint(0,1)
-#         )
-#         for s in student
-#         for sem in range (1, 3)
-# ]
+
+# payTpres = []
+# current_year = 2017
+# for s in student:
+#     for sem in range(1, 3):
+#         if (s.enroll_year > current_year) : continue
+#         elif (s.graduated == 0) :
+#             isPay =1 if (sem==1) else random.randint(0,1)
+#             payTpres.append(  Pay_Tuition(
+#                     sid=s.sid,
+#                     tuition_semester=sem,
+#                     tuition_year=current_year,
+#                     faculty_id=s.faculty_id,
+#                     # tuition_degree=s.degree,
+#                     tuition_paid=isPay,
+#                     tuition_late=late if (late==1 and sem==2 and isPay==0) else random.randint(0,1),
+#             ))
+
 # db.session.add_all(payTpass)
 # db.session.add_all(payTpres)
 # db.session.commit()
@@ -136,3 +152,7 @@ degree_rate = {'Bachelor':21000, 'Master':23000, 'Doctoral':25000}
 
 # for s in semester:
 #         print(s.semester_no, s.year, s.enroll_start_date, s.enroll_end_date)
+
+
+############################ PART STUDY ############################
+
