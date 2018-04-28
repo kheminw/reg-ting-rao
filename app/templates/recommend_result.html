@@ -13,11 +13,12 @@
           </tr>
         </thead>
         <tbody>
-        {% for course in result %}
+        {% for course in grade_results %}
         <tr id="course-wrapper{{loop.index}}">
-          <td id="id{{loop.index}}" style="text-align:center;">{{course.course_id}}</td>
-          <td style="text-align:center;">{{course.course_name}}</td>
-          <td style="text-align:center;">{{course.credit}}</td>
+          <td id="id{{loop.index}}" style="text-align:center;">{{course["course_id"]}}</td>
+          <td style="text-align:center;">{{course["course_name"]}}</td>
+          <td style="text-align:center;">{{course["credit"]}}</td>
+          <td style="text-align:center;">{{course["average"]}}</td>
         </tr>
         {% endfor %}
         </tbody>

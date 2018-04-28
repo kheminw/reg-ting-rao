@@ -275,8 +275,11 @@ def recommend():
             average_grade = db.engine.execute(query_statement).first()[0]
 
             results.append({"course_id" : course[0], "course_name" : course[1], "credit" : course[2], "average" : average_grade})
+            print("LOLOLOLOL")
+            print(results)
 
-        return render_template("recommend_results.html", grade_results=results)
+        results.sort(key=lambda x:x["average"],reverse=True)
+        return render_template("recommend_result.html", grade_results=results)
 
     return render_template("recommend.html", title='recommend')
 
