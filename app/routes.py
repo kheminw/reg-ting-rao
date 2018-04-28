@@ -276,7 +276,7 @@ def recommend():
 
             results.append({"course_id" : course[0], "course_name" : course[1], "credit" : course[2], "average" : average_grade})
 
-        return render_template("recommend.html", grade_results=results)
+        return render_template("recommend_results.html", grade_results=results)
 
     return render_template("recommend.html", title='recommend')
 
