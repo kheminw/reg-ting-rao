@@ -134,9 +134,32 @@ def transcript():
     return render_template("transcript.html", title='transcript')
 
 @app.route("/register", methods=["GET","POST"])
+@login_required
 def register():
-
-    return render_template("register.html", title='Dashboard')
+    if(request.method == 'GET'):
+        request_data = Request.query.filter_by(sid=current_user.username).all()
+        if(len(request_data) != 0):
+            requested_course_info = Course.query \
+                .filter(Course.course_id.in_([x.course_id for x in request_data])) \
+                .filter(Course.course_semester_no == CURRENT_SEMESTER_YEAR[0]) \
+                .filter(Course.course_year == CURRENT_SEMESTER_YEAR[1]).all()
+            return render_template("register.html", registered=True, registration_data=requested_course_info, title='Course Registration')
+        else:
+            return render_template("register.html", registered=False, title='Course Registration') 
+    elif(request.method == 'POST'):
+        subject_id = request.form.getlist('subject_id')
+        subject_section = request.form.getlist('subject_section')
+        print(subject_id, subject_section)
+        for i in range(len(subject_id)):
+            if(subject_id[i] == '' or subject_section[i] == ''):
+                continue
+            else:
+                if(not register_course(subject_id[i], subject_section[i], CURRENT_SEMESTER_YEAR[0], \
+                     CURRENT_SEMESTER_YEAR[1])):
+                    print("Registration Error")
+                    return redirect("/register")
+        return redirect("/register")
+        
 
 @app.route("/profile",methods=['GET','POST'])
 @login_required
@@ -221,30 +244,20 @@ def logout():
     logout_user()
     return redirect("/login")
 
-#send json data to this url
-@app.route("/api/register_new_course", methods=["POST"])
-@login_required
-def rr():
-    res = {}
+def register_course(course_id, section, course_semester_no, course_year):
     successful = False
-    if (request.method == "POST"):
-        print(request.form["sid"])
-        new_study = Study(sid=request.form["sid"],
-                        course_id=request.form["course_id"],
-                        section=request.form["section"],
-                        course_semester_no=request.form["course_semester_no"],
-                        course_year=request.form["course_year"])
-        try:
-            db.session.add(new_study)
-            db.session.commit()
-            successful = True
-        except:
-            db.session.rollback()
-        if(successful):
-            res["result"] = "success"
-        else:
-            res["result"] = "adding data to the table failed"
-    return jsonify(res)
+    new_request = Request(sid=current_user.username,
+                      course_id=course_id,
+                      section=section,
+                      course_semester_no=course_semester_no,
+                      course_year=course_year)
+    try:
+        db.session.add(new_request)
+        db.session.commit()
+        successful = True
+    except:
+        db.session.rollback()
+    return successful
 
 @app.route("/api/add_remove_course", methods=["POST", "DELETE"])
 @login_required
