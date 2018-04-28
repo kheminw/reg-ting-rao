@@ -102,20 +102,22 @@ def transcript():
     for course in registered_course:
         year_semester.add((course.course_year,course.course_semester_no))
     year_semester = sorted(list(year_semester))
-
+    if len(year_semester) < 8:
+        for i in range(0,8-len(year_semester)):
+            year_semester.append((" "," "))
     all_credit_semester = {}
     all_credit_semester[(0,0)] = 0
 
     stack_credit_semester ={}
-
+    stack_credit_semester[(1,user['enroll_year'])] = 0
     for course in registered_course:
         if not (course.course_semester_no,course.course_year) in all_credit_semester:
             all_credit_semester[(course.course_semester_no,course.course_year)] = 0
         if not (course.course_semester_no,course.course_year) in stack_credit_semester:
-            if course.course_semester_no == 1:
+            if course.course_semester_no == 1 and course.course_year != user['enroll_year']:
                 if (3,course.course_year-1) in stack_credit_semester:
                     stack_credit_semester[(course.course_semester_no,course.course_year)] = \
-                    stack_credit_semester[(3,course.course_year-1)]
+                    stack_credit_semester[(3,course.course_year-1)] 
                 else:
                     stack_credit_semester[(course.course_semester_no,course.course_year)] = \
                     stack_credit_semester[(2,course.course_year-1)]
@@ -131,7 +133,16 @@ def transcript():
 
         all_credit_semester[(0,0)] += registered_course_name_dict[course.course_id][1]
 
-    return render_template("transcript.html", title='transcript')
+    registered_course_dict = {} 
+    for i in year_semester:
+        registered_course_dict[(i[0],i[1])] = Study.query \
+        .filter_by(sid=current_user.username,course_semester_no=i[1],course_year=i[0]).all()
+
+
+    return render_template("transcript.html", title='transcript',
+    user=user,registered_course=registered_course,registered_course_name_dict=registered_course_name_dict,
+    registered_course_dict=registered_course_dict,
+    year_semester=year_semester,all_credit_semester=all_credit_semester,stack_credit_semester=stack_credit_semester)
 
 @app.route("/slip/<year>/<semester>", methods=["GET", "POST"])
 @login_required

@@ -8,16 +8,120 @@
         <div class="col-xs-6 col-sm-3">
           <h1>Chulalongkorn University</h1>
         </div>
-        <div class="col-xs-18 .col-sm-9 ">
+        <div class="col-xs-15 .col-sm-9 ">
           <pre>
-            NAME MR.DATABASE ANALYSIS
-            IDENTIFICATION NO. 1 1111 11111 11 1
+            <div style="display:flex; flex-direction:row;">
+              <div style="margin-left:5%;flex:1; white-space:nowrap;">
+                <h4>  NAME <span>{{user.name}}</span></h4>
+                <h4>  IDENTIFICATION NO. <span>{{user.sid}}</span></h4>
+              </div>
+              <div style="margin-left:5%; flex:1; white-space:nowrap;">
+                <h4>  DEGREE <span>{{user.degree}}</span></h4>
+                <h4>  FACULTY <span>{{user.faculty_name}}</span></h4>
+                <h4>  ENROLL YEAR <span>{{user.enroll_year}}</span></h4>
+              </div>
+              <div style="flex:1.5"></div>
+            </div>
           </pre>
+        </div>
+      </div>
+      <div>
+        <div style="margin-top:3%; display:flex; flex-direction:row; background-color:#141f30;">
+          {% for j in range(0,8,4) %}
+            <div style="height:80%;flex:1;border-right-style:solid;">
+              {% for i in range(j,j+4) %}  
+                <div style="padding-left:3%;">
+                  <br>
+                  {%if year_semester[i][1] != " " and year_semester[i][0] != " " %}
+                    <p>SEMESTER {{year_semester[i][1]}} / {{year_semester[i][0]}}</p>
+                    <table class="table table-responsive table-condensed">
+                        <thead>
+                          <tr>
+                            <th style="font-size:40%"class="col-md-1">COURSE NO</th>
+                            <th style="font-size:40%" colspan="4">COURSE TITLE</th>
+                            <th style="font-size:40%" class="col-md-1">CREDIT</th>
+                            <th style="font-size:40%" class="col-md-1">GRADE</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for course in registered_course_dict[(year_semester[i][0],year_semester[i][1])] %}
+                              <tr>
+                                <td style="font-size:40%" >{{course.course_id}}</td>
+                                <td style="font-size:40%" colspan="4">{{registered_course_name_dict[course.course_id][0]}}</td>
+                                <td style="font-size:40%">{{registered_course_name_dict[course.course_id][1]}}</td>
+                                <td style="font-size:40%">{{course.grade}}</td>
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td class="col-md-1"></td>
+                              <td class="col-md-1"></td>
+                              <td class="col-md-1"></td>
+                              <td class="col-md-1"></td>
+                              <td class="col-md-1"></td>
+                              <td style="font-size:40%" class="col-md-1">GPA: <span id="gpa{{year_semester[i][0]}}_{{year_semester[i][1]}}"></span></td>
+                              <td style="font-size:40%" class="col-md-1">GPAX: <span id="gpax{{year_semester[i][0]}}_{{year_semester[i][1]}}"></span></td>
+                            </tr>
+                          </tfoot>
+                      </table>
+                    {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {%endfor%}
+          <div style="padding-left:4%; padding-top:4%;height:80%;flex:1;">
+            <h6>GPAX : <span id="semester-gpax"></span></h6>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
+<script>
+    var gpax = [[0,0],[0,0]];
+    {% for year_and_semester in year_semester %}
+    var gpa{{year_and_semester[0]}}_{{year_and_semester[1]}} = 0;
+    var gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}} = true;
+      {% for course in registered_course_dict[(year_and_semester[0],year_and_semester[1])] %}
+      {% if course.grade is not none %}
+      gpa{{year_and_semester[0]}}_{{year_and_semester[1]}} += 
+      {{registered_course_name_dict[course.course_id][1] 
+        *course.grade/all_credit_semester[(year_and_semester[1],year_and_semester[0])]}};
+      {% else %}
+      gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}} = false;
+      {% endif %}
+      {% endfor %}
+    
+    var c = {{all_credit_semester[(year_and_semester[1],year_and_semester[0])]}};
+    var credit_stack = gpax[gpax.length-1][0]+c;
+    var raw = {{all_credit_semester[(year_and_semester[1],year_and_semester[0])]}}*gpa{{year_and_semester[0]}}_{{year_and_semester[1]}};
+    
+    gpax.push([credit_stack,raw]);
+    
+    if(gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}}){
+      console.log($("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text());
+      $("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text(parseFloat(gpa{{year_and_semester[0]}}_{{year_and_semester[1]}}).toFixed(2).toString());
+      $("#gpax{{year_and_semester[0]}}-{{year_and_semester[1]}}").text(parseFloat(gpax[gpax.length-1][1]/gpax[gpax.length-1][0]).toFixed(2).toString());
+    }
+    else{
+      console.log($("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text());
+      $("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text("Not ready");
+      $("#gpax{{year_and_semester[0]}}-{{year_and_semester[1]}}").text("Not ready");
+    }
+    if({{year_and_semester}} == {{year_semester[-1]}}){
+      if(gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}}){
+        $("#semester-gpa").text(gpa{{year_and_semester[0]}}_{{year_and_semester[1]}}.toString());
+        $("#semester-gpax").text(parseFloat((gpax[gpax.length-1][1]/gpax[gpax.length-1][0])).toFixed(2).toString());
+      }
+      else{
+        $("#semester-gpa").text("Not ready");
+        $("#semester-gpax").text(parseFloat((gpax[gpax.length-2][1]/gpax[gpax.length-2][0])).toFixed(2).toString());
+      }
+      $("#weight").text(gpax[gpax.length-1][0])
+    }
+    {% endfor %}
+</script>
+    
 
 {% endblock %}
