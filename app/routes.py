@@ -265,7 +265,7 @@ def recommend():
         else:
             LAST_SEMESTER_YEAR = (2, CURRENT_SEMESTER_YEAR[1] - 1)
 
-        gened_course = [(course.course_id,course.course_name) for course in Course.query.filter_by(course_Type=request.form["course_Type"]) \
+        gened_course = [(course.course_id,course.course_name,course.credit) for course in Course.query.filter_by(course_Type=request.form["course_Type"]) \
                         if course.course_semester_no == LAST_SEMESTER_YEAR[0] and course.course_year == LAST_SEMESTER_YEAR[1] ]
         
 
@@ -274,10 +274,10 @@ def recommend():
             query_statement = "SELECT AVG(S.grade) from db_test1.Study S WHERE S.course_id = " + str(course[0])
             average_grade = db.engine.execute(query_statement).first()[0]
 
-            results.append({"course_id" : course[0], "course_name" : course[1], "average" : average_grade})
+            results.append({"course_id" : course[0], "course_name" : course[1], "credit" : course[2], "average" : average_grade})
 
         return render_template("recommend.html", grade_results=results)
-        
+
     return render_template("recommend.html", title='recommend')
 
 
