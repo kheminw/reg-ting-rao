@@ -151,5 +151,6 @@ class Request(db.Model):
     section = db.Column(db.Integer, db.ForeignKey('Course.section'), primary_key=True)
     course_semester_no = db.Column(db.Integer, db.ForeignKey('Course.course_semester_no'), primary_key=True)
     course_year = db.Column(db.Integer, db.ForeignKey('Course.course_year'), primary_key=True)
+    random_priority = db.Column(db.Integer)
     result = db.Column(db.String(60))
 

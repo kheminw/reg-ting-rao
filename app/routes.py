@@ -5,16 +5,19 @@ from app.models import *
 from app.forms import LoginForm
 from datetime import timedelta
 from sqlalchemy import and_
+from sqlalchemy.sql import text
 
-@app.route("/index")
-def index():
-    return render_template("index.html", title='Home')
+# A kinda ugly query is needed to get the current semester/year as a global variable 
+
+CURRENT_SEMESTER_YEAR = db.engine.execute("SELECT MAX(semester_no) as current_semester, \
+    `year` AS current_year FROM db_test1.Semester WHERE `year` IN \
+    (SELECT max(`year`) FROM db_test1.Semester)").first()
 
 @app.route("/",methods=['GET','POST'])
 @app.route("/login",methods=['GET','POST'])
 def login():
-    #if current_user.is_authenticated:
-    #    return redirect(url_for('schedule'))
+    if current_user.is_authenticated:
+       return redirect(url_for('schedule'))
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -171,7 +174,8 @@ def profile():
 @app.route("/addcourse",methods=['GET','POST'])
 @login_required
 def addcourse():
-    current_courses = Study.query.filter_by(sid=current_user.username, course_year=2560).all()
+    current_courses = Study.query.filter_by(sid=current_user.username,
+     course_year=CURRENT_SEMESTER_YEAR[1], course_semester_no=CURRENT_SEMESTER_YEAR[0]).all()
     current_courses_name_credit = Course.query \
         .filter(Course.course_id.in_([x.course_id for x in current_courses])).all()
     name_credit_serialized = {}
@@ -191,7 +195,7 @@ def courses():
             current_courses = Course.query.filter(Course.course_name.startswith(
                 request.form["course_name"])).all()
         elif(request.form["course_id"] != ""):
-            current_courses = Course.query.filter(Course.course_name.startswith(
+            current_courses = Course.query.filter(Course.course_id.startswith(
                 request.form["course_id"])).all()
         else:
             return redirect("/courses")

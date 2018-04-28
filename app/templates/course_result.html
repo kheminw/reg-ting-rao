@@ -2,12 +2,29 @@
 {% block content1 %}
 <section class="content">
     <h3>Search Result</h3>
-    {% for course in result %}
     <div style="flex:1; flex-direction:column;padding-left:3%;padding-top:3%; justify-content: center;">
-        <div style="flex:1;">
-            <p>Course Name: {{course.course_name}} Course ID: {{course.course_id}}</p>
-        </div>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <td style="text-align:center;">Course ID</td>
+            <td style="text-align:center;">Name</td>
+            <td style="text-align:center;">Section</td>
+            <td style="text-align:center;">Credit</td>
+            <td style="text-align:center;">Year/Semester</td>
+          </tr>
+        </thead>
+        <tbody>
+        {% for course in result %}
+        <tr id="course-wrapper{{loop.index}}">
+          <td id="id{{loop.index}}" style="text-align:center;">{{course.course_id}}</td>
+          <td style="text-align:center;">{{course.course_name}}</td>
+          <td style="text-align:center;">{{course.section}}</td>
+          <td style="text-align:center;">{{course.credit}}</td>
+          <td style="text-align:center;">{{course.course_year}}/{{course.course_semester_no}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
     </div>
-    {% endfor %}
 </section>
 {% endblock %}
