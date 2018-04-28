@@ -254,6 +254,30 @@ def tuition():
 @app.route("/recommend", methods=['GET','POST'])
 @login_required
 def recommend():
+    if(request.method == "GET"):
+        return render_template("recommend.html", title='recommend')
+    elif(request.method == "POST"):
+        results = []
+        LAST_SEMESTER_YEAR = CURRENT_SEMESTER_YEAR
+
+        if(CURRENT_SEMESTER_YEAR[0] > 1):
+            LAST_SEMESTER_YEAR = (CURRENT_SEMESTER_YEAR[0] - 1, CURRENT_SEMESTER_YEAR[1])
+        else:
+            LAST_SEMESTER_YEAR = (2, CURRENT_SEMESTER_YEAR[1] - 1)
+
+        gened_course = [(course.course_id,course.course_name) for course in Course.query.filter_by(course_Type=request.form["course_Type"]) \
+                        if course.course_semester_no == LAST_SEMESTER_YEAR[0] and course.course_year == LAST_SEMESTER_YEAR[1] ]
+        
+
+        for course in gened_course:
+
+            query_statement = "SELECT AVG(S.grade) from db_test1.Study S WHERE S.course_id = " + str(course[0])
+            average_grade = db.engine.execute(query_statement).first()[0]
+
+            results.append({"course_id" : course[0], "course_name" : course[1], "average" : average_grade})
+
+        return render_template("recommend.html", grade_results=results)
+        
     return render_template("recommend.html", title='recommend')
 
 
