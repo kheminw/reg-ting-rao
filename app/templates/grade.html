@@ -135,7 +135,12 @@ if({{year_and_semester}} == {{year_semester[-1]}}){
   }
   else{
     $("#semester-gpa").text("Not ready");
-    $("#semester-gpax").text(parseFloat((gpax[gpax.length-2][1]/gpax[gpax.length-2][0])).toFixed(2).toString());
+    if (gpax[gpax.length - 2][1] == 0) {
+      $("#semester-gpax").text("Not ready");
+    }
+    else {
+      $("#semester-gpax").text(parseFloat((gpax[gpax.length - 2][1] / gpax[gpax.length - 2][0])).toFixed(2).toString());
+    }
   }
   $("#weight").text(gpax[gpax.length-1][0])
 }
