@@ -21,14 +21,18 @@
       <tbody>
         <tr>
           <td style="color:azure; height:60px;"> Monday </td>
-          {% for course in course_list %}
+          {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
+          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+          {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
+          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+          {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
             {% if course != ""%}
-              {% set classroom = "\n"+"("+course.building_name+" "+course.room_no|string+")" %}
+              {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
               {% if course.name|length > 10 %}
                 <td class= "classroom-long">{{course.name}}{{classroom}}</td>
-              {% elif 0 < course.name|length < 10  %}
+              {% elif 0 < course|length < 10  %}
                 <td class= "classroom-short"> {{course}} </td>
-              {% elif course.name|length == 0  %}
+              {% elif course|length == 0  %}
                 <td> {{course}} </td>
               {% endif %}
             {% else %}
@@ -38,7 +42,11 @@
         </tr>
         <tr>
           <td style="color:azure;"> Tuesday </td>
-          {% for course in course_list %}
+          {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
+          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+          {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
+          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
+          {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
             {% if course != ""%}
               {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
               {% if course.name|length > 10 %}

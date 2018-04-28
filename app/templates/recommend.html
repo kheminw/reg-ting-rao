@@ -1,31 +1,30 @@
-{% extends "main.html" %} {% block content1 %}
+{% extends "main.html" %}
+{% block content1 %}
 
 <section class="content">
-  <form action="/recommend" method="POST">
-    <h3>Recommend courses</h3>
-    <small>Enjoy choosing your A couses.</small>
-    <hr>
-    <div class="container-fluid">
-      <div class="col-lg-6">
-        <h4>*The search will be sorted by Cumulative grade*</h4>
-        <br>
-        <div class="row">
-          <div class="col-lg-9">
-            <select class="select-recommend form-control" name="course_Type">
-              <option>Select the type couse</option>
-              <option value="GENED-SC">Gened Science</option>
-              <option value="gen-SO">Gened Social</option>
-              <option value="GENED-HU">Gened Human</option>
-              <option value="gen-IN">Gened Interdisciplinary</option>
-            </select>
-          </div>
-          <div class="col-lg-1">
-            <button class="btn btn-accent" type="submit">search</button>
-          </div>
+  <h3>Recommend courses</h3>
+  <small>Enjoy choosing your A couses.</small>
+  <hr>
+  <div class="container-fluid">
+    <div class="col-lg-6">
+      <h4>*The search will be sorted by Cumulative grade*</h4>
+      <br>
+      <div class="row">
+        <div class="col-lg-9">
+          <select class="select-recommend form-control">
+          <option>Select the type couse</option>
+          <option value="gen-sci">Gened Science</option>
+          <option value="gen-soc">Gened Social</option>
+          <option value="gen-hu">Gened Human</option>
+          <option value="gen-in">Gened Interdisciplinary</option>
+        </select>
+        </div>
+        <div class="col-lg-1">
+          <button class="btn btn-accent">search</button>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </section>
 
 <!-- <script>
