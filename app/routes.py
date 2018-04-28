@@ -13,15 +13,11 @@ CURRENT_SEMESTER_YEAR = db.engine.execute("SELECT MAX(semester_no) as current_se
     `year` AS current_year FROM db_test1.Semester WHERE `year` IN \
     (SELECT max(`year`) FROM db_test1.Semester)").first()
 
-@app.route("/index")
-def index():
-    return render_template("index.html", title='Home')
-
 @app.route("/",methods=['GET','POST'])
 @app.route("/login",methods=['GET','POST'])
 def login():
-    #if current_user.is_authenticated:
-    #    return redirect(url_for('schedule'))
+    if current_user.is_authenticated:
+       return redirect(url_for('schedule'))
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
