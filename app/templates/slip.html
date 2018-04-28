@@ -1,0 +1,68 @@
+{% extends "main.html" %}
+{% block content1 %}
+<style>
+  hr{
+    border-color: white !important;
+  }
+</style>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="panel panel-filled">
+      <div class="panel-body">
+        <div class="row" style="text-align: center;">
+          <div class="col">
+            <h3>Payment</h3>
+            <h4>Chulalongkorn University
+              254 Phayathai Road, Pathumwan, Bangkok Thailand. 10330</h4>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Name: {{user["name"]}}</h5>
+            <h5>Student ID: {{user["sid"]}}</h5>
+            <h5>Degree: {{user["degree"]}}</h5>
+            <h5>Faculty: {{user["faculty_name"]}}</h5>
+          </div>
+          {% set tui = pay_tuition[-1].tuition_year|string+"/"+pay_tuition[-1].tuition_semester|string%}
+          {% set end_date_list = tuition.tuition_end_date|string%}
+          {% set end_date_list = end_date_list.split('-')%}
+          {% set end_date = end_date_list[2]+'/'+end_date_list[1]+'/'+end_date_list[0]%}
+          <div class="col-md-6">
+            <h4>Semester: {{tui}}</h4>
+            <h5>End Date: {{end_date}}</h5>
+          </div>
+        </div>
+        <hr>
+        <table class="table table-responsive table-condensed">
+          <thead>
+            <tr>
+              <th>Type of Payment</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tuition fee</td>
+              <td>{{tuition.tuition_amount}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Total</td>
+              <td>{{tuition.tuition_amount}}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="row" style="text-align: end;">
+      <div class="col-md-12">
+        <a href=""><button class="btn btn-danger btn-sm">Print</button></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

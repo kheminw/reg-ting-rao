@@ -44,6 +44,7 @@
           <td class="col-md-3 center-text" style="color:wheat">Academic Year/Semester</td>
           <td class="col-md-2 center-text" style="color:wheat">Amount</td>
           <td class="col-md-2 center-text" style="color:wheat">Status</td>
+          <td class="col-md-2 center-text" style="color:wheat">Slip</td>
         </tr>
       </thead>
       <tbody>
@@ -52,7 +53,7 @@
             <td class="center-text">{{pay.tuition_year|string+"/"+pay.tuition_semester|string}}</td>
             <td class="center-text">{{tuition_amount_dict[(pay.tuition_year,pay.tuition_semester)]}}</td>
             {% if pay.tuition_late %}
-              <td class="center-text" style="color:sandybrown">Late paid</td>  
+              <td class="center-text" style="color:sandybrown">Late paid</td>
             {% else %}
               {% if pay.tuition_paid %}
                   <td class="center-text" style="color:rgb(147, 248, 214)">Paid</td>
@@ -60,6 +61,7 @@
                   <td class="center-text" style="color:#f05555">Unpaid</td>
               {% endif %}
             {% endif %}
+            <td class="center-text"><a href="/slip"><button class="btn btn-info btn-xs">Print Slip</button></a></td>
           </tr>
         {% endfor %}
       </tbody>

@@ -130,6 +130,25 @@ def transcript():
 
     return render_template("transcript.html", title='transcript')
 
+@app.route("/slip", methods=["GET", "POST"])
+@login_required
+def slip():
+    user = {}
+    current_user_info = Student.query.filter_by(sid=current_user.username).first()
+    current_user_faculty = Faculty.query.filter_by(faculty_id=current_user_info.faculty_id).first()
+    user["name"] = current_user_info.name
+    user["sid"] = current_user_info.sid
+    user["degree"] = current_user_info.degree
+    user["faculty_name"] = current_user_faculty.faculty_name
+
+    pay_tuition = Pay_Tuition.query.filter_by(sid=current_user.username).all()
+    pay_tuition = sorted(pay_tuition,key=lambda p :p.tuition_year)
+
+    tuition = Tuition.query.filter_by(faculty_id=current_user_info.faculty_id,
+    tuition_degree=current_user_info.degree,tuition_year=pay_tuition[-1].tuition_year,
+    tuition_semester=pay_tuition[-1].tuition_semester).first()
+    return render_template("slip.html", title='slip', user=user, tuition=tuition, pay_tuition=pay_tuition)
+
 @app.route("/register", methods=["GET","POST"])
 def register():
 
@@ -210,6 +229,8 @@ def tuition():
 @login_required
 def recommend():
     return render_template("recommend.html", title='recommend')
+
+
 
 @app.route("/logout", methods=['GET'])
 @login_required
@@ -294,7 +315,6 @@ def get_all_courses():
     for course in all_courses:
         all_courses_parsed["courses"].append(course.course_id)
     return jsonify(all_courses_parsed)
-
 
 @app.route('/test', methods=["GET"])
 def get_student():
