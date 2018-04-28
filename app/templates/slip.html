@@ -25,12 +25,12 @@
             <h5>Degree: {{user["degree"]}}</h5>
             <h5>Faculty: {{user["faculty_name"]}}</h5>
           </div>
-          {% set tui = pay_tuition[-1].tuition_year|string+"/"+pay_tuition[-1].tuition_semester|string%}
+          {% set tui = pay_tuition.tuition_year|string+"/"+pay_tuition.tuition_semester|string%}
           {% set end_date_list = tuition.tuition_end_date|string%}
           {% set end_date_list = end_date_list.split('-')%}
           {% set end_date = end_date_list[2]+'/'+end_date_list[1]+'/'+end_date_list[0]%}
           <div class="col-md-6">
-            <h4>Semester: {{tui}}</h4>
+            <h5>Semester: {{tui}}</h5>
             <h5>End Date: {{end_date}}</h5>
           </div>
         </div>
@@ -59,10 +59,16 @@
     </div>
     <div class="row" style="text-align: end;">
       <div class="col-md-12">
-        <a href=""><button class="btn btn-danger btn-sm">Print</button></a>
+        <button class="btn btn-danger btn-sm" onclick="goprint()">Print</button>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+function goprint() {
+  window.print();
+}
+</script>
 
 {% endblock %}

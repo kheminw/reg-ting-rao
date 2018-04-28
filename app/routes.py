@@ -7,7 +7,7 @@ from datetime import timedelta
 from sqlalchemy import and_
 from sqlalchemy.sql import text
 
-# A kinda ugly query is needed to get the current semester/year as a global variable 
+# A kinda ugly query is needed to get the current semester/year as a global variable
 
 CURRENT_SEMESTER_YEAR = db.engine.execute("SELECT MAX(semester_no) as current_semester, \
     `year` AS current_year FROM db_test1.Semester WHERE `year` IN \
@@ -133,9 +133,9 @@ def transcript():
 
     return render_template("transcript.html", title='transcript')
 
-@app.route("/slip", methods=["GET", "POST"])
+@app.route("/slip/<year>/<semester>", methods=["GET", "POST"])
 @login_required
-def slip():
+def slip(year, semester):
     user = {}
     current_user_info = Student.query.filter_by(sid=current_user.username).first()
     current_user_faculty = Faculty.query.filter_by(faculty_id=current_user_info.faculty_id).first()
@@ -144,12 +144,11 @@ def slip():
     user["degree"] = current_user_info.degree
     user["faculty_name"] = current_user_faculty.faculty_name
 
-    pay_tuition = Pay_Tuition.query.filter_by(sid=current_user.username).all()
-    pay_tuition = sorted(pay_tuition,key=lambda p :p.tuition_year)
+    pay_tuition = Pay_Tuition.query.filter_by(sid=current_user.username,tuition_year=year,tuition_semester=semester).first()
 
     tuition = Tuition.query.filter_by(faculty_id=current_user_info.faculty_id,
-    tuition_degree=current_user_info.degree,tuition_year=pay_tuition[-1].tuition_year,
-    tuition_semester=pay_tuition[-1].tuition_semester).first()
+    tuition_degree=current_user_info.degree,tuition_year=pay_tuition.tuition_year,
+    tuition_semester=pay_tuition.tuition_semester).first()
     return render_template("slip.html", title='slip', user=user, tuition=tuition, pay_tuition=pay_tuition)
 
 @app.route("/register", methods=["GET","POST"])
