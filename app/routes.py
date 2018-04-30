@@ -104,7 +104,7 @@ def transcript():
     year_semester = sorted(list(year_semester))
     if len(year_semester) < 8:
         for i in range(0,8-len(year_semester)):
-            year_semester.append((" "," "))
+            year_semester.append((0,0))
     all_credit_semester = {}
     all_credit_semester[(0,0)] = 0
 

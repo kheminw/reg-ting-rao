@@ -11,8 +11,8 @@
         <div class="panel panel-filled">
           <div class="panel-body">
             <div class="col-md-2 col-xs-3 text-center"> </div>
-            <div class="col-md-3 col-xs-6 text-center"><h2 class="no-margins"id="semester-gpax">{{user_gpax}}</h2>GPAX</div>
-            <div class="col-md-3 col-xs-6 text-center"><h2 class="no-margins" id="semester-gpa">3.45</h2>GPA</div>
+            <div class="col-md-3 col-xs-6 text-center"><h2 class="no-margins"id="semester-gpax"></h2>GPAX</div>
+            <div class="col-md-3 col-xs-6 text-center"><h2 class="no-margins" id="semester-gpa"></h2>GPA</div>
             <div class="col-md-3 col-xs-6 text-center"><h2 class="no-margins" id="weight">122</h2>Weight</div>
             <div class="col-md-1 col-xs-4 text-center"> </div>
           </div>
@@ -99,51 +99,53 @@
 </section>
 <script>
 var gpax = [[0,0],[0,0]];
+
 {% for year_and_semester in year_semester %}
-var gpa{{year_and_semester[0]}}_{{year_and_semester[1]}} = 0;
-var gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}} = true;
-  {% for course in registered_course_dict[(year_and_semester[0],year_and_semester[1])] %}
-  {% if course.grade is not none %}
-  gpa{{year_and_semester[0]}}_{{year_and_semester[1]}} += 
-  {{registered_course_name_dict[course.course_id][1] 
-    *course.grade/all_credit_semester[(year_and_semester[1],year_and_semester[0])]}};
-  {% else %}
-  gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}} = false;
-  {% endif %}
-  {% endfor %}
+  var gpa{{year_and_semester[0]}}_{{year_and_semester[1]}} = 0;
+  var gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}} = true;
+    {% for course in registered_course_dict[(year_and_semester[0],year_and_semester[1])] %}
+    {% if course.grade is not none %}
+    gpa{{year_and_semester[0]}}_{{year_and_semester[1]}} += 
+    {{registered_course_name_dict[course.course_id][1] 
+      *course.grade/all_credit_semester[(year_and_semester[1],year_and_semester[0])]}};
+    {% else %}
+    gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}} = false;
+    {% endif %}
+    {% endfor %}
 
-var c = {{all_credit_semester[(year_and_semester[1],year_and_semester[0])]}};
-var credit_stack = gpax[gpax.length-1][0]+c;
-var raw = {{all_credit_semester[(year_and_semester[1],year_and_semester[0])]}}*gpa{{year_and_semester[0]}}_{{year_and_semester[1]}};
+  var c = {{all_credit_semester[(year_and_semester[1],year_and_semester[0])]}};
+  var credit_stack = gpax[gpax.length-1][0]+c;
+  var raw = {{all_credit_semester[(year_and_semester[1],year_and_semester[0])]}}*gpa{{year_and_semester[0]}}_{{year_and_semester[1]}};
 
-gpax.push([credit_stack,raw]);
+  gpax.push([credit_stack,raw]);
 
-if(gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}}){
-  console.log($("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text());
-  $("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text(parseFloat(gpa{{year_and_semester[0]}}_{{year_and_semester[1]}}).toFixed(2).toString());
-  $("#gpax{{year_and_semester[0]}}-{{year_and_semester[1]}}").text(parseFloat(gpax[gpax.length-1][1]/gpax[gpax.length-1][0]).toFixed(2).toString());
-}
-else{
-  console.log($("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text());
-  $("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text("Not ready");
-  $("#gpax{{year_and_semester[0]}}-{{year_and_semester[1]}}").text("Not ready");
-}
-if({{year_and_semester}} == {{year_semester[-1]}}){
   if(gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}}){
-    $("#semester-gpa").text(gpa{{year_and_semester[0]}}_{{year_and_semester[1]}}.toString());
-    $("#semester-gpax").text(parseFloat((gpax[gpax.length-1][1]/gpax[gpax.length-1][0])).toFixed(2).toString());
+    <!-- console.log($("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text()); -->
+    $("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text(parseFloat(gpa{{year_and_semester[0]}}_{{year_and_semester[1]}}).toFixed(2).toString());
+    $("#gpax{{year_and_semester[0]}}-{{year_and_semester[1]}}").text(parseFloat(gpax[gpax.length-1][1]/gpax[gpax.length-1][0]).toFixed(2).toString());
   }
   else{
-    $("#semester-gpa").text("Not ready");
-    if (gpax[gpax.length - 2][1] == 0) {
-      $("#semester-gpax").text("Not ready");
-    }
-    else {
-      $("#semester-gpax").text(parseFloat((gpax[gpax.length - 2][1] / gpax[gpax.length - 2][0])).toFixed(2).toString());
-    }
+    <!-- console.log($("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text()); -->
+    $("#gpa{{year_and_semester[0]}}-{{year_and_semester[1]}}").text("Not ready");
+    $("#gpax{{year_and_semester[0]}}-{{year_and_semester[1]}}").text("Not ready");
   }
-  $("#weight").text(gpax[gpax.length-1][0])
-}
+  if({{year_and_semester}} == {{year_semester}}[{{year_semester|length}}-1]){
+    console.log(gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}})
+    if(gradeReady{{year_and_semester[0]}}_{{year_and_semester[1]}}){
+      $("#semester-gpa").text(gpa{{year_and_semester[0]}}_{{year_and_semester[1]}}.toFixed(2).toString());
+      $("#semester-gpax").text(parseFloat((gpax[gpax.length-1][1]/gpax[gpax.length-1][0])).toFixed(2).toString());
+    }
+    else{
+      $("#semester-gpa").text("Not ready");
+      if (gpax[gpax.length - 2][1] == 0) {
+        $("#semester-gpax").text("Not ready");
+      }
+      else {
+        $("#semester-gpax").text(parseFloat((gpax[gpax.length - 2][1] / gpax[gpax.length - 2][0])).toFixed(2).toString());
+      }
+    }
+    $("#weight").text(gpax[gpax.length-1][0])
+  }
 {% endfor %}
 </script>
 

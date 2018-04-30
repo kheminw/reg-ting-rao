@@ -29,9 +29,9 @@
             {% if course != ""%}
               {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
               {% if course.name|length > 10 %}
-                <td class= "classroom-long">{{course.name}}{{classroom}}</td>
+                <td class= "classroom-long" style="">{{course.name}}{{classroom}}</td>
               {% elif 0 < course|length < 10  %}
-                <td class= "classroom-short"> {{course}} </td>
+                <td class= "classroom-short" style=""> {{course}}{{classroom}}</td>
               {% elif course|length == 0  %}
                 <td> {{course}} </td>
               {% endif %}
