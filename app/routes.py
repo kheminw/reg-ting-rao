@@ -37,7 +37,39 @@ def main():
 @app.route("/schedule",methods=['GET','POST'])
 @login_required
 def schedule():
-    return render_template("schedule.html", title='schedule')
+    registered_course = Study.query.filter_by(sid=current_user.username).all()
+    registered_course_name_credit = Course.query \
+    .filter(Course.course_id.in_([c.course_id for c in registered_course])).all()
+
+    registered_course_dict = {}
+
+    year_semester = set()
+    for course in registered_course:
+        year_semester.add((course.course_year,course.course_semester_no))
+    year_semester = sorted(list(year_semester))
+
+    course_by_day = {}
+    for i in ["Monday","Tuesday","Wednesday","Thursday","Friday"]:
+        course_by_day[i] = []
+
+    last_year_semester = year_semester[len(year_semester)-1]
+    
+    last_semester_course = set()
+    for course in registered_course_name_credit:
+        if (course.course_year,course.course_semester_no) == last_year_semester:
+            sec = Study.query.filter_by(sid=current_user.username,course_id=course.course_id).first()
+            last_semester_course.add(Course.query.filter_by(course_id=course.course_id,section=sec.section).first())
+    last_semester_course = sorted(list(last_semester_course),key=lambda c: c.course_id)
+    print("----------------------------")
+    print(last_semester_course)
+    for course in last_semester_course:
+            # print(course.course_name)
+            course_by_day[course.course_day].append(course)
+            # print("----------------------------")
+            # print(course_by_day[course.course_day][0].course_start_time)
+            sorted(course_by_day[course.course_day],key=lambda c: c.course_start_time)
+
+    return render_template("schedule.html", title='schedule',course_by_day=course_by_day,last_year_semester=last_year_semester,registered_course_dict=registered_course_dict,last_semester_course=last_semester_course)
 
 @app.route("/grade",methods=['GET','POST'])
 @login_required

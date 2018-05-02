@@ -21,108 +21,164 @@
       <tbody>
         <tr>
           <td style="color:azure; height:60px;"> Monday </td>
-          {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
-            {% if course != ""%}
-              {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
-              {% if course.name|length > 10 %}
-                <td class= "classroom-long" style="">{{course.name}}{{classroom}}</td>
-              {% elif 0 < course|length < 10  %}
-                <td class= "classroom-short" style=""> {{course}}{{classroom}}</td>
-              {% elif course|length == 0  %}
-                <td> {{course}} </td>
+          {% for i in range(0,course_by_day['Monday']|length) %}
+            {% if i+1 < course_by_day['Monday']|length %}
+              {% if course_by_day['Monday'][i].course_end_time != course_by_day['Monday'][i+1].course_start_time and i+1 < course_by_day['Monday']|length %}
+                {% set classroom = "\n"+"("+course_by_day['Monday'][i].building_name+" "+course_by_day['Monday'][i].room_no|string+")" %}
+                {% if course_by_day['Monday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Monday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Monday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Monday'][i].course_name}}{{classroom}}</td>
+                {%endif%}
+                {% for j in range(0,(course_by_day['Monday'][i].course_end_time.strftime("%H")|int - 
+                course_by_day['Monday'][i+1].course_start_time.strftime("%H")|int))%}
+                  <td></td>
+                {%endfor%}
+              {%else%}
+                {% set classroom = "\n"+"("+course_by_day['Monday'][i].building_name+" "+course_by_day['Monday'][i].room_no|string+")" %}
+                {% if course_by_day['Monday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Monday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Monday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Monday'][i].course_name}}{{classroom}}</td>
+                {% endif %}
               {% endif %}
             {% else %}
-              <td class= "classroom-long"></td>
+              {% set classroom = "\n"+"("+course_by_day['Monday'][i].building_name+" "+course_by_day['Monday'][i].room_no|string+")" %}
+              {% if course_by_day['Monday'][i].course_name|length > 10 %}
+                <td class= "classroom-long">{{course_by_day['Monday'][i].course_name}}{{classroom}}</td>
+              {% elif 0 < course_by_day['Monday'][i].course_name|length < 10  %}
+                <td class= "classroom-short"> {{course_by_day['Monday'][i].course_name}}{{classroom}}</td>
+              {% endif %}
             {% endif %}
           {% endfor %}
         </tr>
         <tr>
           <td style="color:azure;"> Tuesday </td>
-          {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
-            {% if course != ""%}
-              {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
-              {% if course.name|length > 10 %}
-                <td class= "classroom-long">{{course.name}}{{classroom}}</td>
-              {% elif 0 < course|length < 10  %}
-                <td class= "classroom-short"> {{course}} </td>
-              {% elif course|length == 0  %}
-                <td> {{course}} </td>
+          {% for i in range(0,course_by_day['Tuesday']|length) %}
+            {% if i+1 < course_by_day['Tuesday']|length%}
+              {% if course_by_day['Tuesday'][i].course_end_time != course_by_day['Tuesday'][i+1].course_start_time %}
+                {% set classroom = "\n"+"("+course_by_day['Tuesday'][i].building_name+" "+course_by_day['Tuesday'][i].room_no|string+")" %}
+                {% if course_by_day['Tuesday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Tuesday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Tuesday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Tuesday'][i].course_name}}{{classroom}}</td>
+                {%endif%}
+                {% for j in range(0,course_by_day['Tuesday'][i].course_end_time.strftime("%H")|int-course_by_day['Tuesday'][i+1].course_start_time.strftime("%H")|int)%}
+                  <td></td>
+                {%endfor%}
+              {%else%}
+                {% set classroom = "\n"+"("+course_by_day['Tuesday'][i].building_name+" "+course_by_day['Tuesday'][i].room_no|string+")" %}
+                {% if course_by_day['Tuesday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Tuesday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Tuesday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Tuesday'][i].course_name}}{{classroom}}</td>
+                {% endif %}
               {% endif %}
             {% else %}
-              <td class= "classroom-long"></td>
-            {% endif %}
-        {% endfor %}
+              {% set classroom = "\n"+"("+course_by_day['Tuesday'][i].building_name+" "+course_by_day['Tuesday'][i].room_no|string+")" %}
+              {% if course_by_day['Tuesday'][i].course_name|length > 10 %}
+                <td class= "classroom-long">{{course_by_day['Tuesday'][i].course_name}}{{classroom}}</td>
+              {% elif 0 < course_by_day['Tuesday'][i].course_name|length < 10  %}
+                <td class= "classroom-short"> {{course_by_day['Tuesday'][i].course_name}}{{classroom}}</td>
+              {% endif %}
+            {%endif%}  
+          {% endfor %}
         </tr>
         <tr>
           <td style="color:azure; height:60px"> Wednesday </td>
-          {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
-            {% if course != ""%}
-              {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
-              {% if course.name|length > 10 %}
-                <td class= "classroom-long">{{course.name}}{{classroom}}</td>
-              {% elif 0 < course|length < 10  %}
-                <td class= "classroom-short"> {{course}} </td>
-              {% elif course|length == 0  %}
-                <td> {{course}} </td>
+          {% for i in range(0,course_by_day['Wednesday']|length) %}
+            {% if i+1 < course_by_day['Wednesday']|length%}
+              {% if course_by_day['Wednesday'][i].course_end_time != course_by_day['Wednesday'][i+1].course_start_time %}
+                {% set classroom = "\n"+"("+course_by_day['Wednesday'][i].building_name+" "+course_by_day['Wednesday'][i].room_no|string+")" %}
+                {% if course_by_day['Wednesday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Wednesday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Wednesday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Wednesday'][i].course_name}}{{classroom}}</td>
+                {%endif%}
+                {% for j in range(0,course_by_day['Wednesday'][i].course_end_time-course_by_day['Wednesday'][i+1].course_start_time)%}
+                  <td></td>
+                {%endfor%}
+              {%else%}
+                {% set classroom = "\n"+"("+course_by_day['Wednesday'][i].building_name+" "+course_by_day['Wednesday'][i].room_no|string+")" %}
+                {% if course_by_day['Wednesday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Wednesday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Wednesday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Wednesday'][i].course_name}}{{classroom}}</td>
+                {% endif %}
               {% endif %}
-            {% else %}
-              <td class= "classroom-long"></td>
+            {%else%}
+              {% set classroom = "\n"+"("+course_by_day['Wednesday'][i].building_name+" "+course_by_day['Wednesday'][i].room_no|string+")" %}
+              {% if course_by_day['Wednesday'][i].course_name|length > 10 %}
+                <td class= "classroom-long">{{course_by_day['Wednesday'][i].course_name}}{{classroom}}</td>
+              {% elif 0 < course_by_day['Wednesday'][i].course_name|length < 10  %}
+                <td class= "classroom-short"> {{course_by_day['Wednesday'][i].course_name}}{{classroom}}</td>
+              {% endif %}
             {% endif %}
-        {% endfor %}
+          {% endfor %}
         </tr>
         <tr>
           <td style="color:azure;"> Thursday </td>
-          {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
-            {% if course != ""%}
-              {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
-              {% if course.name|length > 10 %}
-                <td class= "classroom-long">{{course.name}}{{classroom}}</td>
-              {% elif 0 < course|length < 10  %}
-                <td class= "classroom-short"> {{course}} </td>
-              {% elif course|length == 0  %}
-                <td> {{course}} </td>
+          {% for i in range(0,course_by_day['Thursday']|length) %}
+            {% if i+1 < course_by_day['Thursday']|length%}
+              {% if course_by_day['Thursday'][i].course_end_time != course_by_day['Thursday'][i+1].course_start_time %}
+                {% set classroom = "\n"+"("+course_by_day['Thursday'][i].building_name+" "+course_by_day['Thursday'][i].room_no|string+")" %}
+                {% if course_by_day['Thursday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Thursday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Thursday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Thursday'][i].course_name}}{{classroom}}</td>
+                {%endif%}
+                {% for j in range(0,course_by_day['Thursday'][i].course_end_time-course_by_day['Thursday'][i+1].course_start_time)%}
+                  <td></td>
+                {%endfor%}
+              {%else%}
+                {% set classroom = "\n"+"("+course_by_day['Thursday'][i].building_name+" "+course_by_day['Thursday'][i].room_no|string+")" %}
+                {% if course_by_day['Thursday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Thursday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Thursday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Thursday'][i].course_name}}{{classroom}}</td>
+                {% endif %}
               {% endif %}
-            {% else %}
-              <td class= "classroom-long"></td>
+            {%else%}
+              {%set classroom = "\n"+"("+course_by_day['Thursday'][i].building_name+" "+course_by_day['Thursday'][i].room_no|string+")" %}
+              {% if course_by_day['Thursday'][i].course_name|length > 10 %}
+                <td class= "classroom-long">{{course_by_day['Thursday'][i].course_name}}{{classroom}}</td>
+              {% elif 0 < course_by_day['Thursday'][i].course_name|length < 10  %}
+                <td class= "classroom-short"> {{course_by_day['Thursday'][i].course_name}}{{classroom}}</td>
+              {% endif %}
             {% endif %}
           {% endfor %}
         </tr>
         <tr>
           <td style="color:azure;"> Friday </td>
-          {% for course in [{"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},"","",
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},
-          {"name":"Intro to Database Design","building":"Lorem","room":"404"},{"name":"Intro to Database Design","building":"Lorem","room":"404"}] %}
-            {% if course != ""%}
-              {% set classroom = "\n"+"("+course.building+" "+course.room+")" %}
-              {% if course.name|length > 10 %}
-                <td class= "classroom-long">{{course.name}}{{classroom}}</td>
-              {% elif 0 < course|length < 10  %}
-                <td class= "classroom-short"> {{course}} </td>
-              {% elif course|length == 0  %}
-                <td> {{course}} </td>
+          {% for i in range(0,course_by_day['Friday']|length) %}
+            {% if i+1 < course_by_day['Friday']|length %}
+              {% if course_by_day['Friday'][i].course_end_time != course_by_day['Friday'][i+1].course_start_time %}
+                {% set classroom = "\n"+"("+course_by_day['Friday'][i].building_name+" "+course_by_day['Friday'][i].room_no|string+")" %}
+                {% if course_by_day['Friday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Friday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Friday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Friday'][i].course_name}}{{classroom}}</td>
+                {%endif%}
+                {% for j in range(0,course_by_day['Friday'][i].course_end_time-course_by_day['Friday'][i+1].course_start_time)%}
+                  <td></td>
+                {%endfor%}
+              {%else%}
+                {% set classroom = "\n"+"("+course_by_day['Friday'][i].building_name+" "+course_by_day['Friday'][i].room_no|string+")" %}
+                {% if course_by_day['Friday'][i].course_name|length > 10 %}
+                  <td class= "classroom-long">{{course_by_day['Friday'][i].course_name}}{{classroom}}</td>
+                {% elif 0 < course_by_day['Friday'][i].course_name|length < 10  %}
+                  <td class= "classroom-short"> {{course_by_day['Friday'][i].course_name}}{{classroom}}</td>
+                {% endif %}
               {% endif %}
-            {% else %}
-              <td class= "classroom-long"></td>
+            {%else%}
+              {% set classroom = "\n"+"("+course_by_day['Friday'][i].building_name+" "+course_by_day['Friday'][i].room_no|string+")" %}
+              {% if course_by_day['Friday'][i].course_name|length > 10 %}
+                <td class= "classroom-long">{{course_by_day['Friday'][i].course_name}}{{classroom}}</td>
+              {% elif 0 < course_by_day['Friday'][i].course_name|length < 10  %}
+                <td class= "classroom-short"> {{course_by_day['Friday'][i].course_name}}{{classroom}}</td>
+              {% endif %}
             {% endif %}
-        {% endfor %}
+          {% endfor %}
         </tr>
       </tbody>
     </table>
@@ -141,14 +197,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td style="text-align:center;">0000000</td>
-          <td style="text-align:center;">Songkran Festival</td>
-          <td style="text-align:center;">1</td>
-          <td style="text-align:center;">1</td>
-          <td style="text-align:center;">14 April 2018</td>
-          <td style="text-align:center;">16 April 2018</td>
-        </tr>
+        {% for course in last_semester_course%}
+          <tr>
+            <td style="text-align:center;">{{course.course_id}}</td>
+            <td style="text-align:center;">{{course.course_name}}</td>
+            <td style="text-align:center;">{{course.section}}</td>
+            <td style="text-align:center;">{{course.credit}}</td>
+            <td style="text-align:center;">{{course.midterm_exam_date}}</td>
+            <td style="text-align:center;">{{course.final_exam_date}}</td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
   <!-- </div> -->
