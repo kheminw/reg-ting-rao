@@ -203,8 +203,16 @@
             <td style="text-align:center;">{{course.course_name}}</td>
             <td style="text-align:center;">{{course.section}}</td>
             <td style="text-align:center;">{{course.credit}}</td>
-            <td style="text-align:center;">{{course.midterm_exam_date}}</td>
-            <td style="text-align:center;">{{course.final_exam_date}}</td>
+            {% if course.midterm_exam_date != None %}
+              <td style="text-align:center;">{{course.midterm_exam_date.strftime("%d %B %Y")}}</td>
+            {% else %}
+              <td style="text-align:center;"> - </td>
+            {% endif %}
+            {% if course.final_exam_date != None %}
+              <td style="text-align:center;">{{course.final_exam_date.strftime("%d %B %Y")}}</td>
+            {% else %}
+              <td style="text-align:center;"> - </td>
+            {% endif %}
           </tr>
         {% endfor %}
       </tbody>
