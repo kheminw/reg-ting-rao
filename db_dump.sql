@@ -1,6 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `db_test1` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `db_test1`;
--- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: dbprojectinstance.cmdvn9umwvmv.ap-southeast-1.rds.amazonaws.com    Database: db_test1
 -- ------------------------------------------------------
@@ -39,7 +37,7 @@ CREATE TABLE `Building` (
 
 LOCK TABLES `Building` WRITE;
 /*!40000 ALTER TABLE `Building` DISABLE KEYS */;
-INSERT INTO `Building` VALUES ('Vidya',2),('Engineering 1',21),('Engineering 3',21),('Engineering 4',21),('Borom',22),('Mahamakut',23),('Mahit',26);
+INSERT INTO `Building` VALUES ('Vidya',2),('Engineering 1',21),('Engineering 3',21),('Engineering 4',21),('Borom',22),('Mahamakut',23),('Vodhyakorn',25),('Mahit',26);
 /*!40000 ALTER TABLE `Building` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +64,7 @@ CREATE TABLE `Building_Room` (
 
 LOCK TABLES `Building_Room` WRITE;
 /*!40000 ALTER TABLE `Building_Room` DISABLE KEYS */;
-INSERT INTO `Building_Room` VALUES (201,'Mahamakut',100),(204,'Engineering 3',30),(205,'Engineering 3',30),(206,'Engineering 3',30),(302,'Engineering 1',30),(409,'Engineering 3',30),(409,'Vidya',20),(510,'Borom',60),(1804,'Engineering 4',30);
+INSERT INTO `Building_Room` VALUES (113,'Engineering 1',30),(201,'Mahamakut',100),(204,'Engineering 3',30),(205,'Engineering 3',30),(206,'Engineering 3',30),(302,'Engineering 1',30),(315,'Engineering 3',30),(321,'Engineering 3',30),(402,'Borom',30),(405,'Engineering 3',30),(409,'Engineering 3',30),(409,'Vidya',20),(420,'Engineering 3',30),(501,'Mahamakut',60),(510,'Borom',60),(1804,'Engineering 4',30),(3201,'Vodhyakorn',30);
 /*!40000 ALTER TABLE `Building_Room` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,6 +92,9 @@ CREATE TABLE `Course` (
   `faculty_id` int(11) DEFAULT NULL,
   `room_no` int(11) DEFAULT NULL,
   `building_name` varchar(60) DEFAULT NULL,
+  `course_day` varchar(60) DEFAULT NULL,
+  `course_end_time` time DEFAULT NULL,
+  `course_start_time` time DEFAULT NULL,
   PRIMARY KEY (`course_id`,`section`,`course_semester_no`,`course_year`),
   KEY `building_name` (`building_name`,`room_no`),
   KEY `course_semester_no` (`course_semester_no`,`course_year`),
@@ -110,7 +111,7 @@ CREATE TABLE `Course` (
 
 LOCK TABLES `Course` WRITE;
 /*!40000 ALTER TABLE `Course` DISABLE KEYS */;
-INSERT INTO `Course` VALUES (2110101,1,1,2558,'Computer Programming',3,'2016-03-01','2016-05-10',30,0,'Engineering Freshmen Only',NULL,10,21,302,'Engineering 1'),(2110101,1,1,2560,'Computer Programming',3,'2018-03-01','2018-05-10',30,0,'Engineering Freshmen Only',NULL,10,21,302,'Engineering 1'),(2110422,1,1,2560,'Database Management Systems Design',3,'2018-03-02','2018-05-11',30,0,'CP Juniors Only',NULL,10,21,204,'Engineering 3'),(2110422,2,1,2560,'Database Management Systems Design',3,'2018-03-02','2018-05-11',30,0,'CP Juniors Only',NULL,10,21,205,'Engineering 3'),(2110422,3,1,2560,'Database Management Systems Design',3,'2018-03-02','2018-05-11',30,0,'CP Juniors Only',NULL,10,21,206,'Engineering 3'),(2110422,33,1,2560,'Database Management Systems Design',3,'2018-03-02','2018-05-11',30,0,'CP Juniors Only',NULL,10,21,409,'Engineering 3'),(2313213,1,1,2558,'Digital Photography',3,'2016-03-10','2016-05-21',100,0,'Gened Science',NULL,13,23,201,'Mahamakut'),(2313213,1,1,2560,'Digital Photography',3,'2018-03-10','2018-05-21',100,0,'Gened Science',NULL,13,23,201,'Mahamakut');
+INSERT INTO `Course` VALUES (2110101,1,2,2015,'Computer Programming',3,'2016-03-01','2016-05-10',30,0,'Engineering Freshmen Only',NULL,10,21,302,'Engineering 1','Monday','10:00:00','09:00:00'),(2110101,1,2,2017,'Computer Programming',3,'2018-03-01','2018-05-10',30,0,'Engineering Freshmen Only',NULL,10,21,302,'Engineering 1','Wednesday','10:00:00','09:00:00'),(2110318,1,2,2017,'Distributed Systems Essentials',3,'2018-03-06','2018-05-16',30,0,'CP Junior Only',NULL,10,21,315,'Engineering 3','Friday','09:00:00','08:00:00'),(2110332,33,2,2017,'System Analysis Design',3,'2018-03-07','2018-05-15',30,0,'CP Junior Only',NULL,10,21,321,'Engineering 3','Tuesday','09:00:00','08:00:00'),(2110422,1,2,2017,'Database Management Systems Design',3,'2018-03-02','2018-05-11',30,0,'CP Juniors Only',NULL,10,21,204,'Engineering 3','Tuesday','09:00:00','08:00:00'),(2110422,2,2,2017,'Database Management Systems Design',3,'2018-03-02','2018-05-11',30,0,'CP Juniors Only',NULL,10,21,205,'Engineering 3','Tuesday','09:00:00','08:00:00'),(2110422,3,2,2017,'Database Management Systems Design',3,'2018-03-02','2018-05-11',30,0,'CP Juniors Only',NULL,10,21,206,'Engineering 3','Tuesday','09:00:00','08:00:00'),(2110422,33,2,2017,'Database Management Systems Design',3,'2018-03-02','2018-05-11',30,0,'CP Juniors Only',NULL,10,21,409,'Engineering 3','Tuesday','09:00:00','08:00:00'),(2110432,21,2,2017,'Automatic Speech Recognition',3,NULL,NULL,30,0,'CP Approve Only',NULL,10,21,420,'Engineering 3','Thursday','14:00:00','13:00:00'),(2110471,2,2,2017,'Computer Network I',3,'2018-03-08','2018-05-17',30,0,'CP Juniors Only',NULL,10,21,405,'Engineering 3','Monday','12:00:00','11:00:00'),(2110511,21,2,2017,'Game Programming',3,NULL,NULL,30,0,'CP Approve Only',NULL,10,21,113,'Engineering 1','Monday','14:00:00','13:00:00'),(2207103,1,1,2015,'Philosophy and Logic',3,NULL,NULL,30,0,'GENED-HU',3.12,7,22,402,'Borom','Friday','14:00:00','13:00:00'),(2207103,1,1,2016,'Philosophy and Logic',3,NULL,NULL,30,0,'GENED-HU',2.89,7,22,402,'Borom','Friday','14:00:00','13:00:00'),(2207103,1,2,2017,'Philosophy and Logic',3,'2018-03-06','2018-05-16',30,0,'GENED-HU',NULL,7,22,402,'Borom','Friday','14:00:00','13:00:00'),(2313213,1,2,2015,'Digital Photography',3,'2016-03-10','2016-05-21',100,0,'GENED-SC',NULL,13,23,201,'Mahamakut',NULL,NULL,NULL),(2313213,1,2,2017,'Digital Photography',3,'2018-03-10','2018-05-21',100,0,'GENED-SC',NULL,13,23,201,'Mahamakut',NULL,NULL,NULL),(2313221,1,2,2015,'Photographic Science',3,NULL,NULL,60,0,'GENED-SC',3.87,13,23,501,'Mahamakut','Thursday','14:00:00','13:00:00'),(2313221,1,2,2016,'Photographic Science',3,NULL,NULL,60,0,'GENED-SC',3.98,13,23,501,'Mahamakut','Thursday','14:00:00','13:00:00'),(2313221,1,2,2017,'Photographic Science',3,NULL,NULL,60,0,'GENED-SC',NULL,13,23,501,'Mahamakut','Thursday','14:00:00','13:00:00'),(2502390,1,2,2015,'Intro Pack Design',3,NULL,NULL,30,0,'GENED-IN',3.34,2,25,3201,'Vodhyakorn','Wednesday','09:00:00','08:00:00'),(2502390,1,2,2016,'Intro Pack Design',3,NULL,NULL,30,0,'GENED-IN',3.5,2,25,3201,'Vodhyakorn','Wednesday','09:00:00','08:00:00'),(2502390,1,2,2017,'Intro Pack Design',3,'2018-03-09','2018-05-18',30,0,'GENED-IN',NULL,2,25,3201,'Vodhyakorn','Wednesday','09:00:00','08:00:00');
 /*!40000 ALTER TABLE `Course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +186,7 @@ CREATE TABLE `Major` (
 
 LOCK TABLES `Major` WRITE;
 /*!40000 ALTER TABLE `Major` DISABLE KEYS */;
-INSERT INTO `Major` VALUES (1,21,'Civil Engineering'),(1,22,'Thai'),(1,23,'Mathematics and Computer Science'),(2,21,'Electrical Engineering'),(2,22,'English'),(3,21,'Mechanical Engineering'),(4,22,'History'),(7,22,'Philosophy'),(9,21,'Metallurgical Engineering'),(10,21,'Computer Engineering'),(13,23,'Photo Science');
+INSERT INTO `Major` VALUES (1,21,'Civil Engineering'),(1,22,'Thai'),(1,23,'Mathematics and Computer Science'),(2,21,'Electrical Engineering'),(2,22,'English'),(2,25,'Industrial Design'),(3,21,'Mechanical Engineering'),(4,22,'History'),(7,22,'Philosophy'),(9,21,'Metallurgical Engineering'),(10,21,'Computer Engineering'),(13,23,'Photo Science');
 /*!40000 ALTER TABLE `Major` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,7 +217,7 @@ CREATE TABLE `Pay_Tuition` (
 
 LOCK TABLES `Pay_Tuition` WRITE;
 /*!40000 ALTER TABLE `Pay_Tuition` DISABLE KEYS */;
-INSERT INTO `Pay_Tuition` VALUES (10000,2,2018,21,0,0),(10002,2,2016,25,0,1);
+INSERT INTO `Pay_Tuition` VALUES (10000,1,2017,21,0,1),(10000,2,2017,21,0,1),(10001,1,2017,23,1,1),(10001,2,2017,23,1,0),(10002,1,2016,25,1,1),(10002,1,2017,25,0,1),(10002,2,2016,25,0,1),(10002,2,2017,25,1,0),(20003,1,2013,22,0,1),(20003,1,2014,22,0,1),(20003,1,2015,22,0,1),(20003,1,2016,22,1,1),(20003,2,2013,22,0,1),(20003,2,2014,22,1,1),(20003,2,2015,22,1,1),(20003,2,2016,22,0,1),(20005,1,2015,24,1,1),(20005,1,2016,24,1,1),(20005,2,2015,24,0,1),(20005,2,2016,24,0,1),(30004,1,2017,24,1,1),(30004,2,2017,24,0,1);
 /*!40000 ALTER TABLE `Pay_Tuition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,6 +266,7 @@ CREATE TABLE `Request` (
   `course_semester_no` int(11) NOT NULL,
   `course_year` int(11) NOT NULL,
   `result` varchar(60) DEFAULT NULL,
+  `random_priority` int(11) DEFAULT NULL,
   PRIMARY KEY (`sid`,`course_id`,`section`,`course_semester_no`,`course_year`),
   KEY `course_id` (`course_id`,`section`,`course_semester_no`,`course_year`),
   CONSTRAINT `Request_ibfk_1` FOREIGN KEY (`course_id`, `section`, `course_semester_no`, `course_year`) REFERENCES `Course` (`course_id`, `section`, `course_semester_no`, `course_year`),
@@ -278,6 +280,7 @@ CREATE TABLE `Request` (
 
 LOCK TABLES `Request` WRITE;
 /*!40000 ALTER TABLE `Request` DISABLE KEYS */;
+INSERT INTO `Request` VALUES (10000,2110101,1,2,2017,NULL,NULL),(10000,2110318,1,2,2017,NULL,NULL);
 /*!40000 ALTER TABLE `Request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,7 +308,7 @@ CREATE TABLE `Semester` (
 
 LOCK TABLES `Semester` WRITE;
 /*!40000 ALTER TABLE `Semester` DISABLE KEYS */;
-INSERT INTO `Semester` VALUES (1,2558,'2016-01-01','2016-01-15','2016-03-01','2016-05-01'),(1,2560,'2018-01-01','2018-01-15','2018-03-01','2018-05-01'),(2,2560,'2018-08-01','2018-08-15','2018-11-01','2019-01-01');
+INSERT INTO `Semester` VALUES (1,2015,'2015-08-01','2015-08-15','2015-11-01','2016-01-11'),(1,2016,'2016-08-01','2016-08-15','2016-11-01','2017-01-01'),(1,2017,'2017-08-01','2017-08-15','2017-11-01','2018-01-01'),(2,2015,'2016-01-01','2016-01-15','2016-03-01','2016-05-01'),(2,2016,'2017-01-01','2016-01-15','2017-03-01','2017-05-01'),(2,2017,'2018-01-01','2018-01-15','2018-03-01','2018-05-01');
 /*!40000 ALTER TABLE `Semester` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +344,7 @@ CREATE TABLE `Student` (
 
 LOCK TABLES `Student` WRITE;
 /*!40000 ALTER TABLE `Student` DISABLE KEYS */;
-INSERT INTO `Student` VALUES (10000,'Ah',2018,0,'Bachelor',2.3,100,'A',1,21),(10001,'Than',2018,0,'Bachelor',3.9,NULL,NULL,NULL,23),(10002,'Khem',2016,0,'Master',3.58,100,'B',2,25),(20003,'Nick',2013,1,'Bachelor',2.67,NULL,NULL,NULL,22),(20005,'Gam',2015,1,'Master',2.99,100,'D',4,24),(30004,'Gam',2017,0,'Doctoral',3.5,100,'D',4,24);
+INSERT INTO `Student` VALUES (10000,'Ah',2017,0,'Bachelor',2.3,100,'A',1,21),(10001,'Than',2017,0,'Bachelor',3.9,NULL,NULL,NULL,23),(10002,'Khem',2016,0,'Master',3.58,100,'B',2,25),(20003,'Nick',2013,1,'Bachelor',2.67,NULL,NULL,NULL,22),(20005,'Gam',2015,1,'Master',2.99,100,'D',4,24),(30004,'Gam',2017,0,'Doctoral',3.5,100,'D',4,24);
 /*!40000 ALTER TABLE `Student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,7 +375,7 @@ CREATE TABLE `Study` (
 
 LOCK TABLES `Study` WRITE;
 /*!40000 ALTER TABLE `Study` DISABLE KEYS */;
-INSERT INTO `Study` VALUES (10000,2110101,1,1,2558,4),(10000,2110422,3,1,2560,NULL),(10000,2313213,1,1,2558,2),(10001,2110422,33,1,2560,NULL),(10002,2110422,33,1,2560,NULL);
+INSERT INTO `Study` VALUES (10000,2110318,1,2,2017,4),(10000,2110332,33,2,2017,4),(10000,2110422,3,2,2017,4),(10000,2110432,21,2,2017,4),(10000,2110471,2,2,2017,4),(10000,2110511,21,2,2017,4),(10001,2110422,33,2,2017,NULL),(10001,2207103,1,2,2017,4),(10002,2110422,33,2,2017,NULL),(10002,2207103,1,2,2017,3);
 /*!40000 ALTER TABLE `Study` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,7 +405,7 @@ CREATE TABLE `Teaches` (
 
 LOCK TABLES `Teaches` WRITE;
 /*!40000 ALTER TABLE `Teaches` DISABLE KEYS */;
-INSERT INTO `Teaches` VALUES (2173,2110101,1,1,2558),(2121,2110101,1,1,2560),(2173,2110422,1,1,2560),(2323,2110422,2,1,2560),(2222,2110422,3,1,2560),(2121,2110422,33,1,2560),(3045,2313213,1,1,2558),(3045,2313213,1,1,2560);
+INSERT INTO `Teaches` VALUES (2173,2110101,1,2,2015),(2121,2110101,1,2,2017),(2173,2110422,1,2,2017),(2323,2110422,2,2,2017),(2222,2110422,3,2,2017),(2121,2110422,33,2,2017),(3045,2313213,1,2,2015),(3045,2313213,1,2,2017);
 /*!40000 ALTER TABLE `Teaches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,11 +420,11 @@ CREATE TABLE `Tuition` (
   `tuition_semester` int(11) NOT NULL,
   `tuition_year` int(11) NOT NULL,
   `faculty_id` int(11) NOT NULL,
-  `tuition_degree` varchar(60) DEFAULT NULL,
+  `tuition_degree` varchar(60) NOT NULL,
   `tuition_amount` int(11) DEFAULT NULL,
   `tuition_start_date` date DEFAULT NULL,
   `tuition_end_date` date DEFAULT NULL,
-  PRIMARY KEY (`tuition_semester`,`tuition_year`,`faculty_id`),
+  PRIMARY KEY (`tuition_semester`,`tuition_year`,`faculty_id`,`tuition_degree`),
   KEY `faculty_id` (`faculty_id`),
   CONSTRAINT `Tuition_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `Faculty` (`faculty_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -433,7 +436,7 @@ CREATE TABLE `Tuition` (
 
 LOCK TABLES `Tuition` WRITE;
 /*!40000 ALTER TABLE `Tuition` DISABLE KEYS */;
-INSERT INTO `Tuition` VALUES (1,2014,21,'Bachelor',21000,'2014-07-21','2014-07-29'),(1,2015,23,'Master',23000,'2015-07-21','2015-07-29'),(1,2016,21,'Bachelor',21000,'2016-07-21','2016-07-29'),(1,2017,21,'Doctoral',21000,'2017-07-21','2017-07-29'),(2,2016,24,'Bachelor',21000,'2016-12-21','2016-12-29'),(2,2016,25,'Bachelor',21000,'2016-12-21','2016-12-29'),(2,2018,21,'Bachelor',21000,'2018-12-21','2018-12-29');
+INSERT INTO `Tuition` VALUES (1,2013,21,'Bachelor',21000,'2013-12-21','2013-12-29'),(1,2013,21,'Doctoral',25000,'2013-12-21','2013-12-29'),(1,2013,21,'Master',23000,'2013-12-21','2013-12-29'),(1,2013,22,'Bachelor',21000,'2013-12-21','2013-12-29'),(1,2013,22,'Doctoral',25000,'2013-12-21','2013-12-29'),(1,2013,22,'Master',23000,'2013-12-21','2013-12-29'),(1,2013,23,'Bachelor',21000,'2013-12-21','2013-12-29'),(1,2013,23,'Doctoral',25000,'2013-12-21','2013-12-29'),(1,2013,23,'Master',23000,'2013-12-21','2013-12-29'),(1,2013,24,'Bachelor',21000,'2013-12-21','2013-12-29'),(1,2013,24,'Doctoral',25000,'2013-12-21','2013-12-29'),(1,2013,24,'Master',23000,'2013-12-21','2013-12-29'),(1,2013,25,'Bachelor',21000,'2013-12-21','2013-12-29'),(1,2013,25,'Doctoral',25000,'2013-12-21','2013-12-29'),(1,2013,25,'Master',23000,'2013-12-21','2013-12-29'),(1,2013,26,'Bachelor',21000,'2013-12-21','2013-12-29'),(1,2013,26,'Doctoral',25000,'2013-12-21','2013-12-29'),(1,2013,26,'Master',23000,'2013-12-21','2013-12-29'),(1,2014,21,'Bachelor',21000,'2014-12-21','2014-12-29'),(1,2014,21,'Doctoral',25000,'2014-12-21','2014-12-29'),(1,2014,21,'Master',23000,'2014-12-21','2014-12-29'),(1,2014,22,'Bachelor',21000,'2014-12-21','2014-12-29'),(1,2014,22,'Doctoral',25000,'2014-12-21','2014-12-29'),(1,2014,22,'Master',23000,'2014-12-21','2014-12-29'),(1,2014,23,'Bachelor',21000,'2014-12-21','2014-12-29'),(1,2014,23,'Doctoral',25000,'2014-12-21','2014-12-29'),(1,2014,23,'Master',23000,'2014-12-21','2014-12-29'),(1,2014,24,'Bachelor',21000,'2014-12-21','2014-12-29'),(1,2014,24,'Doctoral',25000,'2014-12-21','2014-12-29'),(1,2014,24,'Master',23000,'2014-12-21','2014-12-29'),(1,2014,25,'Bachelor',21000,'2014-12-21','2014-12-29'),(1,2014,25,'Doctoral',25000,'2014-12-21','2014-12-29'),(1,2014,25,'Master',23000,'2014-12-21','2014-12-29'),(1,2014,26,'Bachelor',21000,'2014-12-21','2014-12-29'),(1,2014,26,'Doctoral',25000,'2014-12-21','2014-12-29'),(1,2014,26,'Master',23000,'2014-12-21','2014-12-29'),(1,2015,21,'Bachelor',21000,'2015-12-21','2015-12-29'),(1,2015,21,'Doctoral',25000,'2015-12-21','2015-12-29'),(1,2015,21,'Master',23000,'2015-12-21','2015-12-29'),(1,2015,22,'Bachelor',21000,'2015-12-21','2015-12-29'),(1,2015,22,'Doctoral',25000,'2015-12-21','2015-12-29'),(1,2015,22,'Master',23000,'2015-12-21','2015-12-29'),(1,2015,23,'Bachelor',21000,'2015-12-21','2015-12-29'),(1,2015,23,'Doctoral',25000,'2015-12-21','2015-12-29'),(1,2015,23,'Master',23000,'2015-12-21','2015-12-29'),(1,2015,24,'Bachelor',21000,'2015-12-21','2015-12-29'),(1,2015,24,'Doctoral',25000,'2015-12-21','2015-12-29'),(1,2015,24,'Master',23000,'2015-12-21','2015-12-29'),(1,2015,25,'Bachelor',21000,'2015-12-21','2015-12-29'),(1,2015,25,'Doctoral',25000,'2015-12-21','2015-12-29'),(1,2015,25,'Master',23000,'2015-12-21','2015-12-29'),(1,2015,26,'Bachelor',21000,'2015-12-21','2015-12-29'),(1,2015,26,'Doctoral',25000,'2015-12-21','2015-12-29'),(1,2015,26,'Master',23000,'2015-12-21','2015-12-29'),(1,2016,21,'Bachelor',21000,'2016-12-21','2016-12-29'),(1,2016,21,'Doctoral',25000,'2016-12-21','2016-12-29'),(1,2016,21,'Master',23000,'2016-12-21','2016-12-29'),(1,2016,22,'Bachelor',21000,'2016-12-21','2016-12-29'),(1,2016,22,'Doctoral',25000,'2016-12-21','2016-12-29'),(1,2016,22,'Master',23000,'2016-12-21','2016-12-29'),(1,2016,23,'Bachelor',21000,'2016-12-21','2016-12-29'),(1,2016,23,'Doctoral',25000,'2016-12-21','2016-12-29'),(1,2016,23,'Master',23000,'2016-12-21','2016-12-29'),(1,2016,24,'Bachelor',21000,'2016-12-21','2016-12-29'),(1,2016,24,'Doctoral',25000,'2016-12-21','2016-12-29'),(1,2016,24,'Master',23000,'2016-12-21','2016-12-29'),(1,2016,25,'Bachelor',21000,'2016-12-21','2016-12-29'),(1,2016,25,'Doctoral',25000,'2016-12-21','2016-12-29'),(1,2016,25,'Master',23000,'2016-12-21','2016-12-29'),(1,2016,26,'Bachelor',21000,'2016-12-21','2016-12-29'),(1,2016,26,'Doctoral',25000,'2016-12-21','2016-12-29'),(1,2016,26,'Master',23000,'2016-12-21','2016-12-29'),(1,2017,21,'Bachelor',21000,'2017-12-21','2017-12-29'),(1,2017,21,'Doctoral',25000,'2017-12-21','2017-12-29'),(1,2017,21,'Master',23000,'2017-12-21','2017-12-29'),(1,2017,22,'Bachelor',21000,'2017-12-21','2017-12-29'),(1,2017,22,'Doctoral',25000,'2017-12-21','2017-12-29'),(1,2017,22,'Master',23000,'2017-12-21','2017-12-29'),(1,2017,23,'Bachelor',21000,'2017-12-21','2017-12-29'),(1,2017,23,'Doctoral',25000,'2017-12-21','2017-12-29'),(1,2017,23,'Master',23000,'2017-12-21','2017-12-29'),(1,2017,24,'Bachelor',21000,'2017-12-21','2017-12-29'),(1,2017,24,'Doctoral',25000,'2017-12-21','2017-12-29'),(1,2017,24,'Master',23000,'2017-12-21','2017-12-29'),(1,2017,25,'Bachelor',21000,'2017-12-21','2017-12-29'),(1,2017,25,'Doctoral',25000,'2017-12-21','2017-12-29'),(1,2017,25,'Master',23000,'2017-12-21','2017-12-29'),(1,2017,26,'Bachelor',21000,'2017-12-21','2017-12-29'),(1,2017,26,'Doctoral',25000,'2017-12-21','2017-12-29'),(1,2017,26,'Master',23000,'2017-12-21','2017-12-29'),(1,2018,21,'Bachelor',21000,'2018-12-21','2018-12-29'),(1,2018,21,'Doctoral',25000,'2018-12-21','2018-12-29'),(1,2018,21,'Master',23000,'2018-12-21','2018-12-29'),(1,2018,22,'Bachelor',21000,'2018-12-21','2018-12-29'),(1,2018,22,'Doctoral',25000,'2018-12-21','2018-12-29'),(1,2018,22,'Master',23000,'2018-12-21','2018-12-29'),(1,2018,23,'Bachelor',21000,'2018-12-21','2018-12-29'),(1,2018,23,'Doctoral',25000,'2018-12-21','2018-12-29'),(1,2018,23,'Master',23000,'2018-12-21','2018-12-29'),(1,2018,24,'Bachelor',21000,'2018-12-21','2018-12-29'),(1,2018,24,'Doctoral',25000,'2018-12-21','2018-12-29'),(1,2018,24,'Master',23000,'2018-12-21','2018-12-29'),(1,2018,25,'Bachelor',21000,'2018-12-21','2018-12-29'),(1,2018,25,'Doctoral',25000,'2018-12-21','2018-12-29'),(1,2018,25,'Master',23000,'2018-12-21','2018-12-29'),(1,2018,26,'Bachelor',21000,'2018-12-21','2018-12-29'),(1,2018,26,'Doctoral',25000,'2018-12-21','2018-12-29'),(1,2018,26,'Master',23000,'2018-12-21','2018-12-29'),(2,2013,21,'Bachelor',21000,'2013-12-21','2013-12-29'),(2,2013,21,'Doctoral',25000,'2013-12-21','2013-12-29'),(2,2013,21,'Master',23000,'2013-12-21','2013-12-29'),(2,2013,22,'Bachelor',21000,'2013-12-21','2013-12-29'),(2,2013,22,'Doctoral',25000,'2013-12-21','2013-12-29'),(2,2013,22,'Master',23000,'2013-12-21','2013-12-29'),(2,2013,23,'Bachelor',21000,'2013-12-21','2013-12-29'),(2,2013,23,'Doctoral',25000,'2013-12-21','2013-12-29'),(2,2013,23,'Master',23000,'2013-12-21','2013-12-29'),(2,2013,24,'Bachelor',21000,'2013-12-21','2013-12-29'),(2,2013,24,'Doctoral',25000,'2013-12-21','2013-12-29'),(2,2013,24,'Master',23000,'2013-12-21','2013-12-29'),(2,2013,25,'Bachelor',21000,'2013-12-21','2013-12-29'),(2,2013,25,'Doctoral',25000,'2013-12-21','2013-12-29'),(2,2013,25,'Master',23000,'2013-12-21','2013-12-29'),(2,2013,26,'Bachelor',21000,'2013-12-21','2013-12-29'),(2,2013,26,'Doctoral',25000,'2013-12-21','2013-12-29'),(2,2013,26,'Master',23000,'2013-12-21','2013-12-29'),(2,2014,21,'Bachelor',21000,'2014-12-21','2014-12-29'),(2,2014,21,'Doctoral',25000,'2014-12-21','2014-12-29'),(2,2014,21,'Master',23000,'2014-12-21','2014-12-29'),(2,2014,22,'Bachelor',21000,'2014-12-21','2014-12-29'),(2,2014,22,'Doctoral',25000,'2014-12-21','2014-12-29'),(2,2014,22,'Master',23000,'2014-12-21','2014-12-29'),(2,2014,23,'Bachelor',21000,'2014-12-21','2014-12-29'),(2,2014,23,'Doctoral',25000,'2014-12-21','2014-12-29'),(2,2014,23,'Master',23000,'2014-12-21','2014-12-29'),(2,2014,24,'Bachelor',21000,'2014-12-21','2014-12-29'),(2,2014,24,'Doctoral',25000,'2014-12-21','2014-12-29'),(2,2014,24,'Master',23000,'2014-12-21','2014-12-29'),(2,2014,25,'Bachelor',21000,'2014-12-21','2014-12-29'),(2,2014,25,'Doctoral',25000,'2014-12-21','2014-12-29'),(2,2014,25,'Master',23000,'2014-12-21','2014-12-29'),(2,2014,26,'Bachelor',21000,'2014-12-21','2014-12-29'),(2,2014,26,'Doctoral',25000,'2014-12-21','2014-12-29'),(2,2014,26,'Master',23000,'2014-12-21','2014-12-29'),(2,2015,21,'Bachelor',21000,'2015-12-21','2015-12-29'),(2,2015,21,'Doctoral',25000,'2015-12-21','2015-12-29'),(2,2015,21,'Master',23000,'2015-12-21','2015-12-29'),(2,2015,22,'Bachelor',21000,'2015-12-21','2015-12-29'),(2,2015,22,'Doctoral',25000,'2015-12-21','2015-12-29'),(2,2015,22,'Master',23000,'2015-12-21','2015-12-29'),(2,2015,23,'Bachelor',21000,'2015-12-21','2015-12-29'),(2,2015,23,'Doctoral',25000,'2015-12-21','2015-12-29'),(2,2015,23,'Master',23000,'2015-12-21','2015-12-29'),(2,2015,24,'Bachelor',21000,'2015-12-21','2015-12-29'),(2,2015,24,'Doctoral',25000,'2015-12-21','2015-12-29'),(2,2015,24,'Master',23000,'2015-12-21','2015-12-29'),(2,2015,25,'Bachelor',21000,'2015-12-21','2015-12-29'),(2,2015,25,'Doctoral',25000,'2015-12-21','2015-12-29'),(2,2015,25,'Master',23000,'2015-12-21','2015-12-29'),(2,2015,26,'Bachelor',21000,'2015-12-21','2015-12-29'),(2,2015,26,'Doctoral',25000,'2015-12-21','2015-12-29'),(2,2015,26,'Master',23000,'2015-12-21','2015-12-29'),(2,2016,21,'Bachelor',21000,'2016-12-21','2016-12-29'),(2,2016,21,'Doctoral',25000,'2016-12-21','2016-12-29'),(2,2016,21,'Master',23000,'2016-12-21','2016-12-29'),(2,2016,22,'Bachelor',21000,'2016-12-21','2016-12-29'),(2,2016,22,'Doctoral',25000,'2016-12-21','2016-12-29'),(2,2016,22,'Master',23000,'2016-12-21','2016-12-29'),(2,2016,23,'Bachelor',21000,'2016-12-21','2016-12-29'),(2,2016,23,'Doctoral',25000,'2016-12-21','2016-12-29'),(2,2016,23,'Master',23000,'2016-12-21','2016-12-29'),(2,2016,24,'Bachelor',21000,'2016-12-21','2016-12-29'),(2,2016,24,'Doctoral',25000,'2016-12-21','2016-12-29'),(2,2016,24,'Master',23000,'2016-12-21','2016-12-29'),(2,2016,25,'Bachelor',21000,'2016-12-21','2016-12-29'),(2,2016,25,'Doctoral',25000,'2016-12-21','2016-12-29'),(2,2016,25,'Master',23000,'2016-12-21','2016-12-29'),(2,2016,26,'Bachelor',21000,'2016-12-21','2016-12-29'),(2,2016,26,'Doctoral',25000,'2016-12-21','2016-12-29'),(2,2016,26,'Master',23000,'2016-12-21','2016-12-29'),(2,2017,21,'Bachelor',21000,'2017-12-21','2017-12-29'),(2,2017,21,'Doctoral',25000,'2017-12-21','2017-12-29'),(2,2017,21,'Master',23000,'2017-12-21','2017-12-29'),(2,2017,22,'Bachelor',21000,'2017-12-21','2017-12-29'),(2,2017,22,'Doctoral',25000,'2017-12-21','2017-12-29'),(2,2017,22,'Master',23000,'2017-12-21','2017-12-29'),(2,2017,23,'Bachelor',21000,'2017-12-21','2017-12-29'),(2,2017,23,'Doctoral',25000,'2017-12-21','2017-12-29'),(2,2017,23,'Master',23000,'2017-12-21','2017-12-29'),(2,2017,24,'Bachelor',21000,'2017-12-21','2017-12-29'),(2,2017,24,'Doctoral',25000,'2017-12-21','2017-12-29'),(2,2017,24,'Master',23000,'2017-12-21','2017-12-29'),(2,2017,25,'Bachelor',21000,'2017-12-21','2017-12-29'),(2,2017,25,'Doctoral',25000,'2017-12-21','2017-12-29'),(2,2017,25,'Master',23000,'2017-12-21','2017-12-29'),(2,2017,26,'Bachelor',21000,'2017-12-21','2017-12-29'),(2,2017,26,'Doctoral',25000,'2017-12-21','2017-12-29'),(2,2017,26,'Master',23000,'2017-12-21','2017-12-29'),(2,2018,21,'Bachelor',21000,'2018-12-21','2018-12-29'),(2,2018,21,'Doctoral',25000,'2018-12-21','2018-12-29'),(2,2018,21,'Master',23000,'2018-12-21','2018-12-29'),(2,2018,22,'Bachelor',21000,'2018-12-21','2018-12-29'),(2,2018,22,'Doctoral',25000,'2018-12-21','2018-12-29'),(2,2018,22,'Master',23000,'2018-12-21','2018-12-29'),(2,2018,23,'Bachelor',21000,'2018-12-21','2018-12-29'),(2,2018,23,'Doctoral',25000,'2018-12-21','2018-12-29'),(2,2018,23,'Master',23000,'2018-12-21','2018-12-29'),(2,2018,24,'Bachelor',21000,'2018-12-21','2018-12-29'),(2,2018,24,'Doctoral',25000,'2018-12-21','2018-12-29'),(2,2018,24,'Master',23000,'2018-12-21','2018-12-29'),(2,2018,25,'Bachelor',21000,'2018-12-21','2018-12-29'),(2,2018,25,'Doctoral',25000,'2018-12-21','2018-12-29'),(2,2018,25,'Master',23000,'2018-12-21','2018-12-29'),(2,2018,26,'Bachelor',21000,'2018-12-21','2018-12-29'),(2,2018,26,'Doctoral',25000,'2018-12-21','2018-12-29'),(2,2018,26,'Master',23000,'2018-12-21','2018-12-29');
 /*!40000 ALTER TABLE `Tuition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -456,7 +459,7 @@ CREATE TABLE `alembic_version` (
 
 LOCK TABLES `alembic_version` WRITE;
 /*!40000 ALTER TABLE `alembic_version` DISABLE KEYS */;
-INSERT INTO `alembic_version` VALUES ('f26feff4c26f');
+INSERT INTO `alembic_version` VALUES ('97aac3e0b7d2');
 /*!40000 ALTER TABLE `alembic_version` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -495,4 +498,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-25 23:09:36
+-- Dump completed on 2018-05-03  8:45:50
