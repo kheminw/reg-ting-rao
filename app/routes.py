@@ -247,7 +247,8 @@ def addcourse():
     for course in current_courses_name_credit:
         name_credit_serialized[course.course_id] = [course.course_name, course.credit]
     return render_template("add-eliminate.html", title='addcourse',
-        current_courses=current_courses, name_credit=name_credit_serialized)
+        current_courses=current_courses, name_credit=name_credit_serialized,
+        current_year=CURRENT_SEMESTER_YEAR[1], current_semester=CURRENT_SEMESTER_YEAR[0])
 
 @app.route("/courses",methods=['GET','POST'])
 @login_required
